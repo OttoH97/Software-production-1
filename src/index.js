@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {OmatSivut} from './Omat_tiedot';
+import {Kotisivut} from './kotisivut_sivu';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -9,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 ReactDOM.render(
   <React.StrictMode>
     <OmatSivut />
+    {/* <Kotisivut /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
