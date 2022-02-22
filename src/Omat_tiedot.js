@@ -21,7 +21,7 @@ function OmatSivut() {
             <Nav className="me-auto">
                 <Nav.Link href="#home">Koti</Nav.Link>
                 <Nav.Link href="#link">Tiedot</Nav.Link>
-                <Nav.Link href="#link">Matkat</Nav.Link>
+                <Nav.Link href="#link">Omat matkat</Nav.Link>
             <NavDropdown title="Droppi" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">tänne jotain</NavDropdown.Item>          
             </NavDropdown>
