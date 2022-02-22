@@ -7,7 +7,7 @@ import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 
 
-function OmatSivut() {
+function Jasensivu() {
 
     const data = [
         {
@@ -96,4 +96,4 @@ function OmatSivut() {
 </div>
     )
 }
-export {OmatSivut};
+export {Jasensivu};

@@ -6,7 +6,7 @@ import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 
-function OmatSivut() {
+function Matkakohdesivu() {
 
     return(
 <div>
@@ -31,4 +31,4 @@ function OmatSivut() {
     )
     
 }
-export {OmatSivut};
+export {Matkakohdesivu};
