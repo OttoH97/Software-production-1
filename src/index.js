@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {OmatSivut} from './Omat_tiedot';
-//import {PorukanMatkat} from './porukanmatkat_sivu';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
