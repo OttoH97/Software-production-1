@@ -58,8 +58,8 @@ function Kotisivut() {
                         </Accordion.Item>
                     </Accordion>
                 </Row>
-                <Row>
-                    <Col>
+                <Row style={{display: "flex"}}>
+                    <Col className='text-center'>
                         <Button variant="outline-primary" size="lg">Rekisteröidy</Button>
                     </Col>
                     <Col>
