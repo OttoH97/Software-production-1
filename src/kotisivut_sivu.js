@@ -8,7 +8,7 @@ import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { Accordion } from 'react-bootstrap';
-import Image from 'react-bootstrap/Image';
+import { Image } from 'react-bootstrap';
 
 function Kotisivut() {
 
@@ -31,27 +31,33 @@ function Kotisivut() {
             </Navbar>
 
             <Form>
-                <Accordion defaultActiveKey="0">
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header>Tervetuloa!</Accordion.Header>
-                        <Accordion.Body>
-                            Tervetuloa käyttämään Matkakertomus-websovellusta! Täällä voit tallettaa matkakertomuksiasi,
-                            esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin.
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="1">
-                        <Accordion.Header>Accordion Item #2</Accordion.Header>
-                        <Accordion.Body>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                            est laborum.
-                        </Accordion.Body>
-                    </Accordion.Item>
-                </Accordion>
+                <Row className='text-center'>
+                    {/* <Image className='img-thumbnail' src={require('./Placeholder.png')}></Image> */}
+                    <a>Tähän väliin tulee kuva</a>
+                </Row>
+                <Row>
+                    <Accordion defaultActiveKey="0">
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Tervetuloa!</Accordion.Header>
+                            <Accordion.Body>
+                                Tervetuloa käyttämään Matkakertomus-websovellusta! Täällä voit tallettaa matkakertomuksiasi,
+                                esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin.
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="1">
+                            <Accordion.Header>Accordion Item #2</Accordion.Header>
+                            <Accordion.Body>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                                est laborum.
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                </Row>
                 <Row>
                     <Col>
                         <Button variant="outline-primary" size="lg">Rekisteröidy</Button>
