@@ -52,7 +52,7 @@ function Jasensivu() {
 
     <h3 style={{backgroundColor: "lightgray"}}>Jäsenet</h3><br></br>
     <label>
-        Hae jäsentä nimellä:
+        Hae jäsentä nimellä: <br></br>
         <input type="text" value={nimi} onChange={(e) =>setNimi(e.target.value)}/>
     </label>
     <button>Hae</button><br></br>
