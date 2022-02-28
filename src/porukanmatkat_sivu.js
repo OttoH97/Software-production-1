@@ -18,9 +18,6 @@ function PorukanMatkat() {
 
     }
 
-    
-
-
     return (
 
 
