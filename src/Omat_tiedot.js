@@ -8,7 +8,6 @@ import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col,FloatingLabel } from 'react-bootstrap';
 
-
 function OmatSivut() {
 
     return(

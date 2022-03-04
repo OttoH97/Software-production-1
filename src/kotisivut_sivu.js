@@ -9,32 +9,35 @@ import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { Accordion } from 'react-bootstrap';
 import { Image } from 'react-bootstrap';
+import pic from './banner.png';
+
+//import {Kotisivut} from './kotisivut_sivu'; //kopioi index.js tiedostoon
+//<Kotisivut /> //kopioi index.js tiedostoon
 
 function Kotisivut() {
 
     return (
         <div>
             <Navbar bg="light" expand="lg">
-                <Container>
-                    <Navbar.Brand href="#home">Matkakertomus</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Koti</Nav.Link>
-                            <Nav.Link href="#link">Tiedot</Nav.Link>
-                            <NavDropdown title="Droppi" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">123</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
+                <Navbar.Brand href="#home">Matkakertomus</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href="#home">Matkakohteet</Nav.Link>
+                        <Nav.Link href="#link">Omat matkat</Nav.Link>
+                        <Nav.Link href="#link">Porukan matkat</Nav.Link>
+                        <Nav.Link href="#link">Jäsenet</Nav.Link>
+                        <Nav.Link href="#link">Omat tiedot</Nav.Link>
+                        <Button variant="outline-primary" size="sm">Rekisteröidy</Button>
+                        <Button variant="outline-primary" size="sm">Kirjaudu sisään</Button>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
 
             <Form>
-                <Row className='text-center'>
-                    {/* <Image className='img-thumbnail' src={require('./Placeholder.png')}></Image> */}
-                    <a>Tähän väliin tulee kuva</a>
-                </Row>
+                <div className='text-center'>
+                    <img src={pic} width={1920} height={400} alt="" /><br />
+                </div>
                 <Row>
                     <Accordion defaultActiveKey="0">
                         <Accordion.Item eventKey="0">
@@ -58,7 +61,7 @@ function Kotisivut() {
                         </Accordion.Item>
                     </Accordion>
                 </Row>
-                <Row style={{display: "flex"}}>
+                <Row style={{ display: "flex" }}>
                     <Col className='text-center'>
                         <Button variant="outline-primary" size="lg">Rekisteröidy</Button>
                     </Col>
