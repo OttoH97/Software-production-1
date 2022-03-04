@@ -12,21 +12,18 @@ function OmatSivut() {
 
     return(
 <div>
-    <Navbar bg="light" expand="lg">
-        <Container>
+<Navbar  bg="light" expand="lg">        
         <Navbar.Brand href="#home">Matkakertomus</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-                <Nav.Link href="#home">Koti</Nav.Link>
-                <Nav.Link href="#link">Tiedot</Nav.Link>
+                <Nav.Link href="#home">Matkakohteet</Nav.Link>
                 <Nav.Link href="#link">Omat matkat</Nav.Link>
-            <NavDropdown title="Droppi" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">tänne jotain</NavDropdown.Item>          
-            </NavDropdown>
+                <Nav.Link href="#link">Porukan matkat</Nav.Link>
+                <Nav.Link href="#link">Jäsenet</Nav.Link>
+                <Nav.Link href="#link">Omat tiedot</Nav.Link>            
             </Nav>
-        </Navbar.Collapse>
-        </Container>
+        </Navbar.Collapse>        
     </Navbar>
 
 <Form>

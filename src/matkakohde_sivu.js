@@ -35,20 +35,17 @@ function Matkakohdesivu() {
     return (
         <div>
             <Navbar bg="light" expand="lg">
-                <Container>
-                    <Navbar.Brand href="#home">Matkakertomus</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Koti</Nav.Link>
-                            <Nav.Link href="#link">Tiedot</Nav.Link>
-                            <Nav.Link href="#link">Matkat</Nav.Link>
-                            <NavDropdown title="Droppi" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">tänne jotain</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
+                <Navbar.Brand href="#home">Matkakertomus</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href="#home">Matkakohteet</Nav.Link>
+                        <Nav.Link href="#link">Omat matkat</Nav.Link>
+                        <Nav.Link href="#link">Porukan matkat</Nav.Link>
+                        <Nav.Link href="#link">Jäsenet</Nav.Link>
+                        <Nav.Link href="#link">Omat tiedot</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
 
             <h3 style={{ backgroundColor: "lightgray" }}>Matkakohteet</h3><br></br>
