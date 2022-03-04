@@ -9,7 +9,6 @@ import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { Accordion } from 'react-bootstrap';
 import { Image } from 'react-bootstrap';
-import pic from "Placeholder.png"
 
 function Kotisivut() {
 
