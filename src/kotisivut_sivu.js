@@ -28,8 +28,8 @@ function Kotisivut() {
                         <Nav.Link href="#link">Porukan matkat</Nav.Link>
                         <Nav.Link href="#link">Jäsenet</Nav.Link>
                         <Nav.Link href="#link">Omat tiedot</Nav.Link>
-                        <Button variant="outline-primary" size="sm">Rekisteröidy</Button>
-                        <Button variant="outline-primary" size="sm">Kirjaudu sisään</Button>
+                        <Nav.Link><Button variant="outline-primary" size="sm">Rekisteröidy</Button></Nav.Link>
+                        <Nav.Link><Button variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
