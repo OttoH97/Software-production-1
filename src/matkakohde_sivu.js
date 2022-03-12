@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
-import { Container } from 'react-bootstrap';
-import { Navbar } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
+import { Navbar, Card, Button} from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 
@@ -13,18 +13,28 @@ function Matkakohdesivu() {
             "id": 5,
             "kohdenimi": "Pariisi",
             "maa": "Ranska",
+            "kuva": "pariisi.jpg",
             "kuvausteksti": "Kaupunki"
         },
         {
             "id": 6,
             "kohdenimi": "Berliini",
             "maa": "Saksa",
+            "kuva": "berliini.jpg",
             "kuvausteksti": "Kaupunki"
         },
         {
             "id": 7,
             "kohdenimi": "Helsinki",
             "maa": "Suomi",
+            "kuva": "helsinki.jpg",
+            "kuvausteksti": "Kaupunki"
+        },
+        {
+            "id": 8,
+            "kohdenimi": "Rooma",
+            "maa": "Italia",
+            "kuva": "italia.jpg",
             "kuvausteksti": "Kaupunki"
         }
     ]
@@ -49,44 +59,36 @@ function Matkakohdesivu() {
             </Navbar>
 
             <h3 style={{ backgroundColor: "lightgray" }}>Matkakohteet</h3><br></br>
+          
+            <Container>
+                <Row className="mb-5">
+                    <Col>
             <label>
                 Hae matkakohteita: <br></br>
                 <input type="text" value={nimi} onChange={(e) => setNimi(e.target.value)} />
             </label>
-            <button>Hae</button><br></br>
-
-            <table className='taulu'>
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            Matkakohde
-                        </th>
-                        <th scope="col">
-                            Maa
-                        </th>
-                        <th scope="col">
-                            Kuvaus
-                        </th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {matkakohteet.map((matkakohde) => (
-                        <tr key={matkakohde.id}>
-                            <td>
-                                <img src='https://i.pravatar.cc/100' alt="" />
-                                {matkakohde.kohdenimi}
-                            </td>
-                            <td>{matkakohde.maa}</td>
-                            <td>{matkakohde.kuvausteksti}</td>
-                            <td><button>Poista</button></td>
-                            <td><button>Muokkaa</button></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
+            <button>Hae</button>
+            </Col>
+            </Row>
+                <Row xs={2} md={4} className="g-4">
+            {matkakohteet.map((matkakohde) => (
+                <Col>
+            <Card style={{ width: '16rem' }}>
+                <Card.Img variant="top" src={matkakohde.kuva}/>
+                <Card.Body>
+                    <Card.Title>{matkakohde.kohdenimi}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{matkakohde.maa}</Card.Subtitle>
+                    <Card.Text>
+                        {matkakohde.kuvausteksti}
+                    </Card.Text>
+                    <Button className="mx-3" variant="primary">Muokkaa</Button>
+                    <Button variant="danger">Poista</Button>
+                </Card.Body>
+            </Card>
+            </Col>
+            ))}
+            </Row>
+            </Container>
         </div>
     )
 
