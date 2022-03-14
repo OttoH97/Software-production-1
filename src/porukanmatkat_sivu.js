@@ -6,12 +6,31 @@ import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col, FloatingLabel, Table } from 'react-bootstrap';
+import Axios from 'axios';
 
 
 
 function PorukanMatkat() {
 
     const [katsoPressed, setKatsoPressed] = useState(false);
+    const [matkataulu,setMatkataulu] = usestate([]);
+    const [matka,setMatka] = useState('');
+    const [alkupvm,setAlkupvm] = useState('');
+    const [loppupvm,setLoppupvm] = useState('');
+
+    /*useEffect(()=>{
+        Axios.get('http://localhost:3001/api/get').then((response)=>{
+            setMatkataulu(response.data);
+        });
+    },[]);
+
+    const submitMatka =()=>{
+        Axios.post("http://localhost:3001/api/insert",{
+          matka: matka,
+          alkupvm : alkupvm,
+          loppupvm : loppupvm, 
+        });
+    }*/
 
     const eventHandler = (event) =>{
     setKatsoPressed = (true);
@@ -44,6 +63,8 @@ function PorukanMatkat() {
                             <tr>
                                 <th>#</th>
                                 <th>Matkakohde</th>
+                                <th>Alku pvm</th>
+                                <th>Loppu pvm </th>
                                 
                             </tr>
                         </thead>
@@ -54,6 +75,12 @@ function PorukanMatkat() {
                                 <td>1.1.2022</td>
                                 <td>30.1.2022</td>
                                 <td><Button onClick={(e)=>eventHandler()} >Katso</Button></td>
+                            </tr>
+                            <tr>
+                            <td>1</td>
+                                <td>Ibiza</td>
+                                <td>28.2.2022</td>
+                                <td>3.3.2022</td>
                             </tr>
                         </tbody>
 
