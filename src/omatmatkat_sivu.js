@@ -14,6 +14,7 @@ function OmatMatkat(){
 
     return(
         <div>
+            
     <Navbar  bg="light" expand="lg">        
         <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -31,9 +32,10 @@ function OmatMatkat(){
         {
             // Jonkunnäöinen looppi matkakohteille tauluun
         }
-    <Form>
 
-        <br></br>
+    <Container fluid="md">
+    <Form>
+        <h3>Omat matkat</h3>
 
     <Table striped bordered hover size="sm">
     <thead>
@@ -88,6 +90,7 @@ function OmatMatkat(){
         <Button variant="success">Luo</Button>{' '}
     
     </Form>
+    </Container>
 </div>
 
 

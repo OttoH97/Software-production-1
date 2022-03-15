@@ -2,7 +2,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState, useEffect} from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, FormGroup } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
@@ -27,7 +27,10 @@ function OmatSivut() {
         </Navbar.Collapse>        
     </Navbar>
 
+<Container fluid="md">
 <Form>
+    <h3>Omat tiedot</h3>
+    <Form.Group>
     <Row>
     <Col>
         <Form.Label>Etunimi</Form.Label>
@@ -42,7 +45,7 @@ function OmatSivut() {
         <Form.Control placeholder="" />
     </Col>
     </Row>
-
+    </Form.Group>
     
         <Form.Group className="mb-2" controlId="salasana">
         <Form.Label>Paikkakunta</Form.Label>
@@ -57,7 +60,8 @@ function OmatSivut() {
         style={{ height: '100px' }}
         />
         </FloatingLabel>
-        
+    
+
     <Row>
     <Col>
         <Form.Label>Sähköposti</Form.Label>
@@ -68,7 +72,10 @@ function OmatSivut() {
         <Form.Control readOnly placeholder="" />
     </Col>
     </Row>
+    <br></br>
+    <Button variant="success">Tallenna</Button>{' '}
 </Form>
+</Container>
 </div>
     )
     
