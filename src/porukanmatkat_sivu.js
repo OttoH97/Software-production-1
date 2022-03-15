@@ -13,7 +13,7 @@ import Axios from 'axios';
 function PorukanMatkat() {
 
     const [katsoPressed, setKatsoPressed] = useState(false);
-    const [matkataulu,setMatkataulu] = usestate([]);
+    const [matkataulu,setMatkataulu] = useState([]);
     const [matka,setMatka] = useState('');
     const [alkupvm,setAlkupvm] = useState('');
     const [loppupvm,setLoppupvm] = useState('');
@@ -41,20 +41,20 @@ function PorukanMatkat() {
 
 
         <div>
-            <Navbar bg="light" expand="lg">
-                <Container>
-                    <Navbar.Brand href="#home">Matkakertomus</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Koti</Nav.Link>
-                            <Nav.Link href="#link">Tiedot</Nav.Link>
-                            <NavDropdown title="Droppi" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">123</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
+        <Navbar bg="light" expand="lg">
+                <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href="matkakohde">Matkakohteet</Nav.Link>
+                        <Nav.Link href="omatkat">Omat matkat</Nav.Link>
+                        <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
+                        <Nav.Link href="jasenet">Jäsenet</Nav.Link>
+                        <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
+                        <Nav.Link><Button variant="outline-primary" size="sm">Rekisteröidy</Button></Nav.Link>
+                        <Nav.Link><Button variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
             <div className='matkataulu'>
                 <Form >
