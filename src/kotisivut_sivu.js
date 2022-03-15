@@ -1,7 +1,7 @@
 //Kotisivut
 import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect} from 'react';
+import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
@@ -10,7 +10,6 @@ import { Form, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { Accordion } from 'react-bootstrap';
 import { Image } from 'react-bootstrap';
 import pic from './banner.png';
-import { Link } from "react-router-dom";
 
 //import {Kotisivut} from './kotisivut_sivu'; //kopioi index.js tiedostoon
 //<Kotisivut /> //kopioi index.js tiedostoon
