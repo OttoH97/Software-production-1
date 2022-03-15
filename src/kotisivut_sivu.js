@@ -1,7 +1,7 @@
 //Kotisivut
 import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
