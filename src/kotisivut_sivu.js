@@ -1,7 +1,7 @@
 //Kotisivut
 import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
@@ -45,7 +45,7 @@ function Kotisivut() {
                             <Accordion.Header>Tervetuloa!</Accordion.Header>
                             <Accordion.Body>
                                 Tervetuloa käyttämään Matkakertomus-websovellusta! Täällä voit tallettaa matkakertomuksiasi,
-                                esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin.
+                                esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin. Mitähän vittua nyt?
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
