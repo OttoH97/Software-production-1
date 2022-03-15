@@ -62,14 +62,6 @@ function Kotisivut() {
                         </Accordion.Item>
                     </Accordion>
                 </Row>
-                <Row style={{ display: "flex" }}>
-                    <Col className='text-center'>
-                        <Button variant="outline-primary" size="lg">Rekisteröidy</Button>
-                    </Col>
-                    <Col>
-                        <Button variant="outline-primary" size="lg">Kirjaudu sisään</Button>
-                    </Col>
-                </Row>
             </Form>
 
         </div>
