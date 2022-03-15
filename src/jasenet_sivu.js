@@ -39,11 +39,11 @@ function Jasensivu() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Matkakohteet</Nav.Link>
-                        <Nav.Link href="#link">Omat matkat</Nav.Link>
-                        <Nav.Link href="#link">Porukan matkat</Nav.Link>
-                        <Nav.Link href="#link">Jäsenet</Nav.Link>
-                        <Nav.Link href="#link">Omat tiedot</Nav.Link>
+                        <Nav.Link href="matkakohde">Matkakohteet</Nav.Link>
+                        <Nav.Link href="omatkat">Omat matkat</Nav.Link>
+                        <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
+                        <Nav.Link href="jasenet">Jäsenet</Nav.Link>
+                        <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
