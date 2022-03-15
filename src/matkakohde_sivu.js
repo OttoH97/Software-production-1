@@ -54,6 +54,8 @@ function Matkakohdesivu() {
                         <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
+                        <Nav.Link><Button variant="outline-primary" size="sm">Rekisteröidy</Button></Nav.Link>
+                        <Nav.Link><Button variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
