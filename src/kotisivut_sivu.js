@@ -1,7 +1,7 @@
 //Kotisivut
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { Container } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
@@ -10,6 +10,7 @@ import { Form, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { Accordion } from 'react-bootstrap';
 import { Image } from 'react-bootstrap';
 import pic from './banner.png';
+import { Link } from "react-router-dom";
 
 //import {Kotisivut} from './kotisivut_sivu'; //kopioi index.js tiedostoon
 //<Kotisivut /> //kopioi index.js tiedostoon
@@ -19,15 +20,15 @@ function Kotisivut() {
     return (
         <div>
             <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="#home">Matkakertomus</Navbar.Brand>
+                <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Matkakohteet</Nav.Link>
-                        <Nav.Link href="#link">Omat matkat</Nav.Link>
-                        <Nav.Link href="#link">Porukan matkat</Nav.Link>
-                        <Nav.Link href="#link">Jäsenet</Nav.Link>
-                        <Nav.Link href="#link">Omat tiedot</Nav.Link>
+                        <Nav.Link href="matkakohde">Matkakohteet</Nav.Link>
+                        <Nav.Link href="omatkat">Omat matkat</Nav.Link>
+                        <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
+                        <Nav.Link href="jasenet">Jäsenet</Nav.Link>
+                        <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
                         <Nav.Link><Button variant="outline-primary" size="sm">Rekisteröidy</Button></Nav.Link>
                         <Nav.Link><Button variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link>
                     </Nav>
