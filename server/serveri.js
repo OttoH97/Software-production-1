@@ -4,6 +4,9 @@ const mysql = require('mysql')
 const cors = require('cors')
 const bodyParser = require("body-parser")
 
+app.use(cors());
+app.use(express.json());
+
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
@@ -12,17 +15,35 @@ const db = mysql.createPool({
     port:3307,
 })
 
-app.use(cors());
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended:true}))
+/*app.post('/create', (req,res)=>{
+    const idmatkakohde = req.body.idmatkakohde;
+    const kohdenimi = req.body.kohdenimi; 
+    const maa = req.body.maa;
+    const paikkakunta = req.body.paikkakunta;
+    const kuvausteksti = req.body.kuvausteksti;
+    const kuva = req.body.kuva;
+    
 
-/*app.post("/api/insert",(req,res)=>{
-    const matka = req.body.matka;
-    const alkupvm = req.body.alkupvm;
-    const loppupvm = req.body.loppupvm;
+    db.query("INSERT INTO matkaaja (idmatkakohde,kohdenimi,maa,paikkakunta,kuvausteksti,kuva) VALUES (?,?,?,?,?,?)"
+    ,[id,idmatkakohde,kohdenimi,maa,paikkakunta,kuvausteksti,kuva],
+    (err,result)=>{
+        if(err){
+            console.log(err)
+        }else
+        res.send("Values inserted")
+    }
+    );
+});*/
 
-    const sqlInsert =""
-})*/
+app.get('/matkakohde',(req,res)=>{
+    db.query("SELECT * FROM matkakohde",(err,result)=>{
+        if(err){
+            console.log(err)
+        }else{
+            res.send(result)
+        }
+    })
+})
 app.listen(3001, () => {
     console.log("toimii portissa 3001")
 });

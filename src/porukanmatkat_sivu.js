@@ -13,35 +13,27 @@ import Axios from 'axios';
 function PorukanMatkat() {
 
     const [katsoPressed, setKatsoPressed] = useState(false);
-    const [matkataulu,setMatkataulu] = useState([]);
-    const [matka,setMatka] = useState('');
-    const [alkupvm,setAlkupvm] = useState('');
-    const [loppupvm,setLoppupvm] = useState('');
+    const [matkataulu, setMatkataulu] = useState([]);
 
-    /*useEffect(()=>{
-        Axios.get('http://localhost:3001/api/get').then((response)=>{
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/matkakohde").then((response) => {
             setMatkataulu(response.data);
-        });
-    },[]);
+            console.log(response.data);
 
-    const submitMatka =()=>{
-        Axios.post("http://localhost:3001/api/insert",{
-          matka: matka,
-          alkupvm : alkupvm,
-          loppupvm : loppupvm, 
         });
-    }*/
+    }, [])
 
-    const eventHandler = (event) =>{
-    setKatsoPressed = (true);
+
+
+    const eventHandler = (event) => {
+        setKatsoPressed = (true);
 
     }
 
     return (
 
-
         <div>
-        <Navbar bg="light" expand="lg">
+            <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -51,46 +43,59 @@ function PorukanMatkat() {
                         <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
-                        
+
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <div className='matkataulu'>
-                <Form >
-                    <Table striped bordered hover size="sm">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Matkakohde</th>
-                                <th>Alku pvm</th>
-                                <th>Loppu pvm </th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Helsinki</td>
-                                <td>1.1.2022</td>
-                                <td>30.1.2022</td>
-                                <td><Button onClick={(e)=>eventHandler()} >Katso</Button></td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                                <td>Ibiza</td>
-                                <td>28.2.2022</td>
-                                <td>3.3.2022</td>
-                            </tr>
-                        </tbody>
 
-                    </Table>
-
-
-
-                </Form>
-            </div>
+            <Taulu matkataulu = {matkataulu}/>
+    
         </div>
 
+    )
+
+}
+
+export const Taulu = (props) => {
+
+    const { matkataulu } = props;
+
+    const rivit = matkataulu.map((val) => {
+        return <tr key={val.id}>
+            <td>{val.idmatkakohde}</td>
+            <td>{val.kohdenimi}</td>
+            <td>{val.maa}</td>
+            <td>{val.paikkakunta}</td>
+            <td>{val.kuvausteksti}</td>
+            <td>{val.kuva}</td>
+            <td><Button variant="primary">Katso</Button> </td>
+
+        </tr>
+    })
+    return (
+        <div className='matkataulu'>
+
+            <Form >
+                <Table striped bordered hover size="sm">
+
+                    <thead>
+                        <tr>
+                            <th>#Id</th>
+                            <th>Kohdenimi</th>
+                            <th>Maa</th>
+                            <th>Paikkakunta </th>
+                            <th>kuvausteksti </th>
+                            <th>Kuva </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rivit}
+                    </tbody>
+                </Table>
+
+
+            </Form>
+        </div>
     )
 
 }
