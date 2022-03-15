@@ -45,7 +45,7 @@ function Matkakohdesivu() {
     return (
         <div>
             <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="#home">Matkakertomus</Navbar.Brand>
+                <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
