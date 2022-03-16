@@ -124,7 +124,7 @@ function Kotisivut() {
                                 esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin.
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey="1">
+                        {/* <Accordion.Item eventKey="1">
                             <Accordion.Header>Accordion Item #2</Accordion.Header>
                             <Accordion.Body>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -135,7 +135,7 @@ function Kotisivut() {
                                 cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
                                 est laborum.
                             </Accordion.Body>
-                        </Accordion.Item>
+                        </Accordion.Item> */}
                     </Accordion>
                 </Row>
             </Form>
