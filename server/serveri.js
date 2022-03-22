@@ -44,6 +44,16 @@ app.get('/matkakohde',(req,res)=>{
         }
     })
 })
+app.get('/tarina',(req,res)=>{
+    db.query("SELECT teksti FROM tarina",(err,result)=>{
+        if(err){
+            console.log(err)
+        }else{
+            res.send(result)
+        }
+    })
+})
+
 app.listen(3001, () => {
     console.log("toimii portissa 3001")
 });
