@@ -10,7 +10,7 @@ app.use(express.json());
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "katt1mau?",
+    password: "Matkakertomus",
     database: "mydb",
     port:3307,
 })
