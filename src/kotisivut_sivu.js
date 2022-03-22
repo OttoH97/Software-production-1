@@ -8,7 +8,7 @@ import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { Accordion } from 'react-bootstrap';
-import { Image } from 'react-bootstrap';
+import { Image } from 'react-bootstrap/Image';
 import pic from './banner.png';
 import { Link } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
@@ -111,10 +111,11 @@ function Kotisivut() {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-                
-                <div className='text-center'>
-                    <img src={pic} width={1920} height={400} alt="" /><br />
-                </div>
+                <Row>
+                    <div className='text-center'>
+                        <img src={pic} alt="" /><br />
+                    </div>
+                </Row>
                 <Row>
                     <Accordion defaultActiveKey="0">
                         <Accordion.Item eventKey="0">
