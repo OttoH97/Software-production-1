@@ -5,6 +5,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Navbar, Table } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 
 function Jasensivu() {
@@ -30,7 +31,14 @@ function Jasensivu() {
 
     const [nimi, setNimi] = useState('');
     const [jasenet, setJasenet] = useState(data);
+    
+    const [show,setShow] = useState(false);
 
+
+    const [modal, setModal] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <div>
@@ -47,6 +55,24 @@ function Jasensivu() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                <div className='flex'>
+                    <div className='text-center'>
+                        <div className='jasenkuva'>
+                            <img src='https://i.pravatar.cc/100' alt="" />
+                        </div>
+                        <h6 style={{paddingLeft: '1rem'}}>{modal.nimimerkki}</h6>
+                        <p style={{paddingLeft: '1rem'}}>{modal.etunimi} {modal.sukunimi}</p>
+                        <p style={{paddingLeft: '1rem'}}>{modal.paikkakunta}</p>
+                    </div>
+                    <p style={{paddingLeft: '3rem', alignSelf: 'center'}}>{modal.esittely}</p>
+                </div>
+                </Modal.Body>
+            </Modal>
 
             <h3 style={{ backgroundColor: "lightgray" }}>Jäsenet</h3><br></br>
             <Container fluid>
@@ -80,7 +106,7 @@ function Jasensivu() {
                     </thead>
                     <tbody>
                         {jasenet.map((jasen) => (
-                            <tr key={jasen.id}>
+                            <tr key={jasen.id} onClick={() => {handleShow(); setModal(jasen)} }>
                                 <td>
                                     <div className='flex'>
                                         <div className='kuva'>
@@ -100,4 +126,5 @@ function Jasensivu() {
         </div>
     )
 }
+
 export { Jasensivu };

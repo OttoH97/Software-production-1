@@ -63,6 +63,12 @@
   height: 50px;
   width: 50px;
 }
+.jasenkuva img{
+  border-radius: 50%;
+}
+.modalbodyleft{
+  text-align: center;
+}
 .taulu .esittely {
   text-overflow: ellipsis;
   overflow: hidden;

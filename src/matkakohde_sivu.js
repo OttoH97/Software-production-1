@@ -42,6 +42,12 @@ function Matkakohdesivu() {
     const [nimi, setNimi] = useState('');
     const [matkakohteet, setMatkakohteet] = useState(data);
 
+/*     useEffect(async () => {
+        Axios.get("http://localhost:3001/matkakohteet").then((res)=>{
+            setMatkakohteet(res.data)
+            });
+    }, []) */
+
     return (
         <div>
             <Navbar bg="light" expand="lg">
@@ -62,7 +68,7 @@ function Matkakohdesivu() {
 
             <h3 style={{ backgroundColor: "lightgray" }}>Matkakohteet</h3><br></br>
 
-            <Container>
+            <Container fluid>
                 <Row className="mb-5">
                     <Col>
                         <label>
@@ -75,7 +81,7 @@ function Matkakohdesivu() {
                 <Row xs={2} md={4} className="g-4">
                     {matkakohteet.map((matkakohde) => (
                         <Col>
-                            <Card style={{ width: '16rem' }}>
+                            <Card style={{ width: '23vw' }}>
                                 <Card.Img variant="top" src={matkakohde.kuva} />
                                 <Card.Body>
                                     <Card.Title>{matkakohde.kohdenimi}</Card.Title>
