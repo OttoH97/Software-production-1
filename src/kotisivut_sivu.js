@@ -13,8 +13,6 @@ import pic from './banner.png';
 import { Link } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
 
-//import {Kotisivut} from './kotisivut_sivu'; //kopioi index.js tiedostoon
-//<Kotisivut /> //kopioi index.js tiedostoon
 
 function Kotisivut() {
 
@@ -111,11 +109,13 @@ function Kotisivut() {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+                {/* Banner kuva */}
                 <Row>
                     <Container fluid='md'>
                             <Image className='img-fluid' src={pic} alt="" /><br />
                     </Container>
                 </Row>
+                {/* Esittely teksti */}
                 <Row>
                     <Accordion defaultActiveKey="0">
                         <Accordion.Item eventKey="0">
@@ -125,18 +125,6 @@ function Kotisivut() {
                                 esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin.
                             </Accordion.Body>
                         </Accordion.Item>
-                        {/* <Accordion.Item eventKey="1">
-                            <Accordion.Header>Accordion Item #2</Accordion.Header>
-                            <Accordion.Body>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                                est laborum.
-                            </Accordion.Body>
-                        </Accordion.Item> */}
                     </Accordion>
                 </Row>
             </Form>
