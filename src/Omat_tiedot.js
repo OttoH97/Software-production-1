@@ -8,7 +8,7 @@ import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col,FloatingLabel } from 'react-bootstrap';
 import { Link } from "react-router-dom";
-import {Axios} from "axios";
+import Axios from 'axios';
 
 function OmatSivut() {
 
@@ -20,6 +20,7 @@ function OmatSivut() {
             console.log(response.data);
         });
     }, [])
+
 
     return(
 <div>

@@ -7,12 +7,38 @@ import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col,FloatingLabel,ListGroup,Table } from 'react-bootstrap';
+import Axios from 'axios';
 
 
 function OmatMatkat(){
 
+    const [matka, setMatka] = useState([]);
+    const [matkakohde, setMatkakohde] = useState([]);
+    const [tarina, setTarina] = useState([]);
+
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/matka").then((response) => {
+            setMatka(response.data);
+        });
+    }, [])
+
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/matkakohde").then((response) => {
+            setMatkakohde(response.data);
+        });
+    }, [])
+
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/tarina").then((response) => {
+            setTarina(response.data);
+        });
+    }, [])
+
+    
+
 
     return(
+    
         <div>
             
     <Navbar  bg="light" expand="lg">        
