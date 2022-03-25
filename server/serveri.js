@@ -44,8 +44,49 @@ app.get('/matkakohde',(req,res)=>{
         }
     })
 })
+
 app.get('/tarina',(req,res)=>{
     db.query("SELECT teksti FROM tarina",(err,result)=>{
+        if(err){
+            console.log(err)
+        }else{
+            res.send(result)
+        }
+    })
+})
+
+app.get('/matkaaja',(req,res)=>{
+    db.query("SELECT * FROM matkaaja",(err,result)=>{
+        if(err){
+            console.log(err)
+        }else{
+            res.send(result)
+        }
+    })
+})
+
+app.get('/matka',(req,res)=>{
+    db.query("SELECT * FROM matka",(err,result)=>{
+        if(err){
+            console.log(err)
+        }else{
+            res.send(result)
+        }
+    })
+})
+
+app.get('/matkakohde',(req,res)=>{
+    db.query("SELECT * FROM matkakohde",(err,result)=>{
+        if(err){
+            console.log(err)
+        }else{
+            res.send(result)
+        }
+    })
+})
+
+app.get('/kuva',(req,res)=>{
+    db.query("SELECT * FROM kuva",(err,result)=>{
         if(err){
             console.log(err)
         }else{

@@ -8,8 +8,18 @@ import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col,FloatingLabel } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import {Axios} from "axios";
 
 function OmatSivut() {
+
+    const [tiedot, setTiedot] = useState([]);
+
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/matkaaja").then((response) => {
+            setTiedot(response.data);
+            console.log(response.data);
+        });
+    }, [])
 
     return(
 <div>
