@@ -8,19 +8,19 @@ import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col, FloatingLabel, Table } from 'react-bootstrap';
 import Axios from 'axios';
 import { Modal } from 'react-bootstrap';
+import {Routes, Route, BrowserRouter as Router,useNavigate} from 'react-router-dom'
+
 
 
 function PorukanMatkat() {
 
-    const [matkataulu, setMatkataulu] = useState([]);
+    
+    const [user,setUser] = useState(null);
+    
 
-    useEffect(async () => {
-        Axios.get("http://localhost:3001/matkakohde").then((response) => {
-            setMatkataulu(response.data);
-            console.log(response.data);
+    const loginDone = (loggedUser) =>{setUser(loggedUser);}
 
-        });
-    }, [])
+    
 
 
 
@@ -41,8 +41,11 @@ function PorukanMatkat() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
+             
+                {user ? 
+                <Taulu /> : <Kirjaudu onLogin = {(user) => loginDone(user)} />} 
+            
 
-            <Taulu matkataulu={matkataulu} />
 
         </div>
 
@@ -50,7 +53,9 @@ function PorukanMatkat() {
 
 }
 
+
 export const Taulu = (props) => {
+    const [matkataulu, setMatkataulu] = useState([]);
 
     const [tarina,setTarina] = useState([]);
 
@@ -60,7 +65,13 @@ export const Taulu = (props) => {
     const closeStory = () => setShowT(false);
 
 
-    const { matkataulu } = props;
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/matkakohde").then((response) => {
+            setMatkataulu(response.data);
+            console.log(response.data);
+
+        });
+    }, [])
 
     useEffect(async () => {
         Axios.get("http://localhost:3001/tarina").then((response) => {
@@ -125,6 +136,50 @@ export const Taulu = (props) => {
 
             </Form>
         </div>
+    )
+
+}
+export const Kirjaudu = (props) => {
+
+    let navigate = useNavigate();
+
+    const [etunimi, setEtunimi] = useState('');
+    const [hlonro, setHloNro] = useState('');
+
+    const onClick = (event) => {
+        if (props.onLogin != null) {
+
+            props.onLogin(etunimi + ',' + hlonro);
+            console.log(props.onLogin)
+            navigate("/pmatkat")
+
+        }
+    }
+
+    return (
+        <div>
+
+            <label>
+                Etunimi
+                <input
+                    type="text"
+                    value={etunimi}
+                    onChange={(e) => setEtunimi(e.target.value)} />
+            </label>
+
+            <label>
+                Henkilönumero
+                <input
+                    type="text"
+                    value={hlonro}
+                    onChange={(e) => setHloNro(e.target.value)} />
+
+            </label>
+
+            <button onClick={(e) => onClick(e)}>Kirjaudu</button>
+
+        </div>
+
     )
 
 }
