@@ -78,7 +78,7 @@ function Kotisivut() {
                         <Button variant="secondary" onClick={handleCloseR}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={handleCloseR}>
+                        <Button variant="primary" type='submit' onClick={handleCloseR}>
                             Rekisteröidy
                         </Button>
                     </Modal.Footer>
@@ -92,11 +92,11 @@ function Kotisivut() {
                         <Form>
                             <Row>
                                 <Form.Label>Sähköposti</Form.Label>
-                                <Form.Control placeholder='' />
+                                <Form.Control placeholder='Anna sähköposti' />
                             </Row>
                             <Row>
                                 <Form.Label>Salasana</Form.Label>
-                                <Form.Control placeholder='' />
+                                <Form.Control placeholder='Anna salasana' />
                             </Row>
                         </Form>
                     </Modal.Body>
@@ -112,7 +112,7 @@ function Kotisivut() {
                 {/* Banner kuva */}
                 <Row>
                     <Container fluid='md'>
-                            <Image className='img-fluid' src={pic} alt="" /><br />
+                        <Image className='img-fluid' src={pic} alt="" /><br />
                     </Container>
                 </Row>
                 {/* Esittely teksti */}
@@ -122,7 +122,8 @@ function Kotisivut() {
                             <Accordion.Header>Tervetuloa!</Accordion.Header>
                             <Accordion.Body>
                                 Tervetuloa käyttämään Matkakertomus-websovellusta! Täällä voit tallettaa matkakertomuksiasi,
-                                esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin.
+                                esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin. 
+                                Liity intohimoisten reissaajien joukkoon!
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
