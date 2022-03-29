@@ -14,13 +14,23 @@ import { Link } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
 
 
+/*
+    TODO:
+    #1 Rekisteröitymistietojen vieminen tietokantaan.
+    #2
+    #3
+ */
+
+
 function Kotisivut() {
 
+    // Rekisteröitymiseen
     const [show, setShow] = useState(false);
 
     const handleCloseR = () => setShow(false);
     const handleShowR = () => setShow(true);
 
+    //Kirjautumiseen
     const [showK, setShowK] = useState(false);
 
     const handleCloseK = () => setShowK(false);
