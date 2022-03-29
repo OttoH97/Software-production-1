@@ -46,7 +46,7 @@ app.get('/matkakohde',(req,res)=>{
 })
 
 app.get('/tarina',(req,res)=>{
-    db.query("SELECT teksti FROM tarina",(err,result)=>{
+    db.query("SELECT * FROM tarina",(err,result)=>{
         if(err){
             console.log(err)
         }else{

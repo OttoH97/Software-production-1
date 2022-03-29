@@ -25,6 +25,7 @@ function OmatMatkat(){
     useEffect(async () => {
         Axios.get("http://localhost:3001/matkakohde").then((response) => {
             setMatkakohde(response.data);
+            console.log(matkakohde);
         });
     }, [])
 
@@ -34,7 +35,14 @@ function OmatMatkat(){
         });
     }, [])
 
-    
+    const rivit = matka.map((val) => {
+        return <tr key={val.id}>
+            <td>{val.idmatka}</td>
+            <td>{val.alkupvm}</td>
+            <td>{val.loppupvm}</td>
+            <td><Button variant="warning">Muokkaa</Button> <Button variant="danger">Poista</Button></td>                    
+        </tr>
+    })
 
 
     return(
@@ -66,21 +74,14 @@ function OmatMatkat(){
     <Table striped bordered hover size="sm">
     <thead>
     <tr>
-      <th>#</th>
-      <th>Matkakohde</th>
+      <th>Matka</th>
       <th>Alku pvm</th>
       <th>Loppu pvm</th>
       <th>Muokkaa / Poista</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>1</td>
-      <td>Moskova</td>
-      <td>1.1.2022</td>
-      <td>30.1.2022</td>
-      <td><Button variant="warning">Muokkaa</Button> <Button variant="danger">Poista</Button></td>
-    </tr>    
+        {rivit}    
     </tbody>
 
     </Table>
@@ -90,16 +91,25 @@ function OmatMatkat(){
 
     <Row>
     <Col>
-        <Form.Label>Matkakohde</Form.Label>
-        <Form.Control placeholder="" />
+    <Form.Label>Matkakohde</Form.Label>
+    <Form.Select>
+        <option>Valitse matkakohde</option>
+        {matkakohde.map((opt) => (
+              <option value={opt.kohdenimi}>{opt.kohdenimi}</option>
+            ))}
+    </Form.Select>
     </Col>
-    <Col>
+    <Col>        
         <Form.Label>Alku pvm</Form.Label>
+        <FloatingLabel label="YYYY-MM-DD">
         <Form.Control placeholder="" />
+        </FloatingLabel>
     </Col>
     <Col>
         <Form.Label>Loppu pvm</Form.Label>
+        <FloatingLabel label="YYYY-MM-DD">
         <Form.Control placeholder="" />
+        </FloatingLabel>
     </Col>
     </Row>
 
