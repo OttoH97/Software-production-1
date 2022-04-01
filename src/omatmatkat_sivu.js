@@ -19,6 +19,7 @@ function OmatMatkat(){
     useEffect(async () => {
         Axios.get("http://localhost:3001/matka").then((response) => {
             setMatka(response.data);
+            console.log(matka);
         });
     }, [])
 
@@ -36,12 +37,19 @@ function OmatMatkat(){
     }, [])
 
     const rivit = matka.map((val) => {
+
+        const getFormattedDate = (dateStr) => { //Muuttaa JSON päivämäärän normaaliksi.
+            const date = new Date(dateStr);
+            return date.toLocaleDateString();
+          }
+        
         return <tr key={val.id}>
             <td>{val.idmatka}</td>
-            <td>{val.alkupvm}</td>
-            <td>{val.loppupvm}</td>
+            <td>{getFormattedDate(val.alkupvm)}</td>
+            <td>{getFormattedDate(val.loppupvm)}</td>
             <td><Button variant="warning">Muokkaa</Button> <Button variant="danger">Poista</Button></td>                    
         </tr>
+        
     })
 
 
