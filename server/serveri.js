@@ -35,6 +35,27 @@ const db = mysql.createPool({
     );
 });*/
 
+// Rekisteröitymiseen
+app.post('/matkaaja', (req, res) => {
+    const idmatkaaja = req.body.idmatkaaja;
+    const etunimi = req.body.etunimi;
+    const sukunimi = req.body.sukunimi;
+    const nimimerkki = req.body.nimimerkki;
+    const email = req.body.email;
+    const password = req.body.password;
+
+
+    db.query('INSERT INTO matkaaja (idmatkaaja,etunimi,sukunimi,nimimerkki,email,password) VALUES (?,?,?,?,?,?)'
+        , [idmatkaaja, etunimi, sukunimi, nimimerkki, email, password],
+        (err, result) => {
+            if (err) {
+                console.log(err)
+            } else
+                res.send("Values inserted")
+        }
+    );
+});
+
 app.get('/matkakohde',(req,res)=>{
     db.query("SELECT * FROM matkakohde",(err,result)=>{
         if(err){

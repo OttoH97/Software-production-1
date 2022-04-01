@@ -1,7 +1,7 @@
 //Kotisivut
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
@@ -12,11 +12,11 @@ import { Image } from 'react-bootstrap';
 import pic from './banner.png';
 import { Link } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
-
+import Axios from 'axios';
 
 /*
     TODO:
-    #1 Rekisteröitymistietojen vieminen tietokantaan.
+    #1 Rekisteröitymistietojen vieminen tietokantaan. DONE
     #2
     #3
  */
@@ -26,13 +26,57 @@ function Kotisivut() {
 
     // Rekisteröitymiseen
     const [show, setShow] = useState(false);
-
-    const handleCloseR = () => setShow(false);
+    const handleCloseR = () => {
+        setShow(false)
+        setEtunimi('');
+        setSukunimi('');
+        setNimimerkki('');
+        setEmail('');
+        setPassword('');
+        // sulkemisen yhteydessä tekstikentät resetoidaan
+    };
     const handleShowR = () => setShow(true);
+    const [matkaaja, setMatkaaja] = useState([]);
+    const [etunimi, setEtunimi] = useState('');
+    const [sukunimi, setSukunimi] = useState('');
+    const [nimimerkki, setNimimerkki] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const handleEnimiChange = event => {
+        setEtunimi(event.target.value)
+    };
+    const handleSnimiChange = event => {
+        setSukunimi(event.target.value)
+    };
+    const handleNmerkkiChange = event => {
+        setNimimerkki(event.target.value)
+    };
+    const handleEmailChange = event => {
+        setEmail(event.target.value)
+    };
+    const handlePasswordChange = event => {
+        setPassword(event.target.value)
+    };
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/matkaaja").then((response) => {
+            setMatkaaja(response.data);
+        });
+    }, [])
+    const handleSubmit = event => {
+        event.preventDefault();
+        Axios.post("http://localhost:3001/matkaaja",{
+            etunimi:etunimi,
+            sukunimi:sukunimi,
+            nimimerkki:nimimerkki,
+            email:email,
+            password:password,
+        });
+        handleCloseR();
+        alert(`Rekisteröityminen onnistui!`);
+    };
 
     //Kirjautumiseen
     const [showK, setShowK] = useState(false);
-
     const handleCloseK = () => setShowK(false);
     const handleShowK = () => setShowK(true);
 
@@ -61,26 +105,26 @@ function Kotisivut() {
                         <Modal.Title>Rekisteröidy</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form>
+                        <Form id='form-register'>
                             <Row>
                                 <Form.Label>Etunimi</Form.Label>
-                                <Form.Control placeholder='' />
+                                <Form.Control type='etunimi' name='etunimi' placeholder='Anna etunimi' onChange={handleEnimiChange} value={etunimi} />
                             </Row>
                             <Row>
                                 <Form.Label>Sukunimi</Form.Label>
-                                <Form.Control placeholder='' />
+                                <Form.Control type='sukunimi' name='sukunimi' placeholder='Anna sukunimi' onChange={handleSnimiChange} value={sukunimi} />
                             </Row>
                             <Row>
                                 <Form.Label>Nimimerkki</Form.Label>
-                                <Form.Control placeholder='' />
+                                <Form.Control type='nimimerkki' name='nimimerkki' placeholder='Anna nimimerkki' onChange={handleNmerkkiChange} value={nimimerkki} />
                             </Row>
                             <Row>
                                 <Form.Label>Sähköposti</Form.Label>
-                                <Form.Control placeholder='' />
+                                <Form.Control type='email' name='email' placeholder='Anna sähköposti' onChange={handleEmailChange} value={email} />
                             </Row>
                             <Row>
                                 <Form.Label>Salasana</Form.Label>
-                                <Form.Control placeholder='' />
+                                <Form.Control type='password' name='password' placeholder='Anna salasana' onChange={handlePasswordChange} value={password} />
                             </Row>
                         </Form>
                     </Modal.Body>
@@ -88,7 +132,7 @@ function Kotisivut() {
                         <Button variant="secondary" onClick={handleCloseR}>
                             Close
                         </Button>
-                        <Button variant="primary" type='submit' onClick={handleCloseR}>
+                        <Button variant="primary" type='submit' onClick={handleSubmit}>
                             Rekisteröidy
                         </Button>
                     </Modal.Footer>
@@ -132,7 +176,7 @@ function Kotisivut() {
                             <Accordion.Header>Tervetuloa!</Accordion.Header>
                             <Accordion.Body>
                                 Tervetuloa käyttämään Matkakertomus-websovellusta! Täällä voit tallettaa matkakertomuksiasi,
-                                esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin. 
+                                esitellä uusia matkakohteita ja tutustua toisten käyttäjien matkoihin ja heidän kokemuksiin.
                                 Liity intohimoisten reissaajien joukkoon!
                             </Accordion.Body>
                         </Accordion.Item>
