@@ -66,6 +66,16 @@
 .jasenkuva img{
   border-radius: 50%;
 }
+.matkakohde:hover{
+  transform: scale(1.1);
+}
+.matkakohde{
+  transition: transform .2s;
+}
+.matkakohdekuva img {
+  width: 40vw;
+
+}
 .modalbodyleft{
   text-align: center;
 }

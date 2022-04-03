@@ -3,6 +3,20 @@ const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
 const bodyParser = require("body-parser")
+const multer  = require('multer')
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/data/uploads/')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix + ".jpg")
+    }
+  })
+
+var upload = multer({ storage: storage });
 
 app.use(cors());
 app.use(express.json());
@@ -54,6 +68,32 @@ app.post('/matkaaja', (req, res) => {
                 res.send("Values inserted")
         }
     );
+});
+
+app.post('/matkakohde',upload.single('kuva'), (req,res)=>{
+    const kohdenimi = req.body.kohdenimi;
+    const maa = req.body.maa;
+    const paikkakunta = req.body.paikkakunta;
+    const kuvausteksti = req.body.kuvausteksti;
+    const kuva = req.file.filename;
+
+    db.query('INSERT INTO matkakohde (kohdenimi,maa,paikkakunta,kuvausteksti,kuva) VALUES (?,?,?,?,?)'
+        , [kohdenimi, maa, paikkakunta, kuvausteksti, kuva],
+        (err, result) => {
+            if (err) {
+                console.log(err)
+            } else
+                res.send(result);
+        }
+    );
+});
+
+
+app.get('/matkakohde/kuva/:tiedostonnimi', function (req, res) {
+    if(req.params.tiedostonnimi == null || req.params.tiedostonnimi.length <= 5)
+        res.send(404);
+
+    res.sendFile(path.join(__dirname,"./public/data/uploads/"+req.params.tiedostonnimi));
 });
 
 app.get('/matkakohde',(req,res)=>{
