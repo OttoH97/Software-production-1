@@ -96,12 +96,14 @@ app.get('/matka',(req,res)=>{
     })
 })
 
-app.get('/matkakohde',(req,res)=>{
-    db.query("SELECT * FROM matkakohde",(err,result)=>{
+app.get('/matkakohdejatarina',(req,res)=>{
+    db.query("SELECT matkakohde.idmatkakohde,matkakohde.kohdenimi,matkakohde.maa,matkakohde.paikkakunta,matkakohde.kuvausteksti,tarina.teksti from matkakohde INNER join tarina on matkakohde.idmatkakohde = tarina.idmatkaaja"
+    ,(err,result)=>{
         if(err){
             console.log(err)
         }else{
             res.send(result)
+            console.log(result)
         }
     })
 })
