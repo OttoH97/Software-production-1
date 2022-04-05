@@ -72,7 +72,7 @@ export const Taulu = (props) => {
     const rivit = matkataulu.map((val) => {
 
         
-        return <tr key={val.id}>
+        return <tr key={val.idmatkakohde}>
             <td>{val.idmatkakohde}</td>
             <td>{val.kohdenimi}</td>
             <td>{val.maa}</td>
@@ -113,7 +113,7 @@ export const Taulu = (props) => {
                 
                 <Modal show={showT} onHide={closeStory} >
                     <Modal.Header closeButton>
-                        Tarina
+                        <h1>Tarina</h1>
                     </Modal.Header>
 
                     <ModalBody>

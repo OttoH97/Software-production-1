@@ -173,7 +173,7 @@ app.get('/matka',(req,res)=>{
 })
 
 app.get('/matkakohdejatarina',(req,res)=>{
-    db.query("SELECT matkakohde.idmatkakohde,matkakohde.kohdenimi,matkakohde.maa,matkakohde.paikkakunta,matkakohde.kuvausteksti,tarina.teksti from matkakohde INNER join tarina on matkakohde.idmatkakohde = tarina.idmatkaaja"
+    db.query("SELECT matkakohde.idmatkakohde,matkakohde.kohdenimi,matkakohde.maa,matkakohde.paikkakunta,matkakohde.kuvausteksti,tarina.teksti from matkakohde INNER join tarina on matkakohde.idmatkakohde = tarina.idmatkakohde"
     ,(err,result)=>{
         if(err){
             console.log(err)
