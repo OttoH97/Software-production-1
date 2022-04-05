@@ -110,13 +110,13 @@ function OmatMatkat(){
     <Col>        
         <Form.Label>Alku pvm</Form.Label>
         <FloatingLabel label="YYYY-MM-DD">
-        <Form.Control placeholder="" />
+        <Form.Control id='alkupvm' placeholder="" />
         </FloatingLabel>
     </Col>
     <Col>
         <Form.Label>Loppu pvm</Form.Label>
         <FloatingLabel label="YYYY-MM-DD">
-        <Form.Control placeholder="" />
+        <Form.Control id='loppupvm' placeholder="" />
         </FloatingLabel>
     </Col>
     </Row>
@@ -125,6 +125,7 @@ function OmatMatkat(){
 
     <FloatingLabel controlId="floatingTextarea2" label="Tarina">
         <Form.Control
+        id='tarina'
         as="textarea"
         placeholder=""
         style={{ height: '100px' }}

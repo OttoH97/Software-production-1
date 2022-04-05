@@ -45,27 +45,28 @@ function OmatSivut() {
     <Row>
     <Col>
         <Form.Label>Etunimi</Form.Label>
-        <Form.Control placeholder="" />
+        <Form.Control id='etunimi' placeholder="" />
     </Col>
     <Col>
         <Form.Label>Sukunimi</Form.Label>
-        <Form.Control placeholder="" />
+        <Form.Control id='sukunimi' placeholder="" />
     </Col>
     <Col>
         <Form.Label>Nimimerkki</Form.Label>
-        <Form.Control placeholder="" />
+        <Form.Control id='nimimerkki' placeholder="" />
     </Col>
     </Row>
     </Form.Group>
     
         <Form.Group className="mb-2" controlId="salasana">
         <Form.Label>Paikkakunta</Form.Label>
-        <Form.Control type="text" placeholder="" />
+        <Form.Control id='paikkakunta' type="text" placeholder="" />
         </Form.Group>
     
     
         <FloatingLabel controlId="floatingTextarea2" label="Esittely">
         <Form.Control
+        id='esittely'
         as="textarea"
         placeholder=""
         style={{ height: '100px' }}
