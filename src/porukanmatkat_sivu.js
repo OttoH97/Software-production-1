@@ -50,11 +50,7 @@ function PorukanMatkat() {
 
 export const Taulu = (props) => {
     const [matkataulu, setMatkataulu] = useState([]);
-
-    const [tarina,setTarina] = useState([]);
-
     const [showT, setShowT] = useState(false);
-    const [matka,setMatka] = useState('')
     const [modalData,setModalData] = useState(null);
     
 
@@ -74,6 +70,8 @@ export const Taulu = (props) => {
     
     
     const rivit = matkataulu.map((val) => {
+
+        
         return <tr key={val.id}>
             <td>{val.idmatkakohde}</td>
             <td>{val.kohdenimi}</td>
@@ -105,6 +103,7 @@ export const Taulu = (props) => {
                             <th>Paikkakunta </th>
                             <th>kuvausteksti </th>
                             <th>Kuva </th>
+                            <th>Tarina</th>
                         </tr>
                     </thead>
                     <tbody>
