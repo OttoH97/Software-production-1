@@ -16,6 +16,36 @@ function OmatMatkat(){
     const [matkakohde, setMatkakohde] = useState([]);
     const [tarina, setTarina] = useState([]);
 
+    //matka
+    const [alkupaivamaara, setAlkupaivamaara] = useState([]);
+    const [loppupaivamaara, setLoppupaivamaara] = useState([]);
+    const [matkaajaID, setMatkaajaID] = useState([]);
+    const [yksityinen, setYksityinen] = useState([]);
+    //tarina
+    const [matkakohdeID, setMatkakohdeID] = useState([]);
+    const [paivamaara, setPaivamaara] = useState([]);
+    const [tarinaTeksti, setTarinaTeksti] = useState([]);
+    const [matkaID, setMatkaID] = useState([]);
+
+    const handlealkupvm = event => {
+        setAlkupaivamaara(event.target.value)
+    };
+    const handleloppupvm = event => {
+        setLoppupaivamaara(event.target.value)
+    };
+    const handleTarina = event => {
+        setTarinaTeksti(event.target.value)
+    };
+    const handleMatkakohdeID = event => {
+        setMatkakohdeID(event.target.value)       
+    };
+
+    var currentdate = new Date(); 
+        var datetime = currentdate.getFullYear() + "-"
+                + (currentdate.getMonth()+1)  + "-" 
+                + currentdate.getDate();
+         
+
     useEffect(async () => {
         Axios.get("http://localhost:3001/matka").then((response) => {
             setMatka(response.data);
@@ -35,6 +65,17 @@ function OmatMatkat(){
             setTarina(response.data);
         });
     }, [])
+
+    const handleMatka = event => {
+        event.preventDefault();
+        Axios.post("http://localhost:3001/omatmatkat",{
+            idmatkaaja:matkaajaID,
+            alkupvm:alkupaivamaara,
+            loppupvm:loppupaivamaara,
+            yksityinen:yksityinen,
+        });
+        alert(`Luonti onnistui`);
+    };
 
     const rivit = matka.map((val) => {
 
@@ -96,27 +137,27 @@ function OmatMatkat(){
 
     <br></br>
     <h3>Luo uusi matka</h3>
-
+        
     <Row>
     <Col>
     <Form.Label>Matkakohde</Form.Label>
-    <Form.Select>
-        <option>Valitse matkakohde</option>
+    <Form.Select onChange={handleMatkakohdeID}>
+            <option>Valitse matkakohde</option>
         {matkakohde.map((opt) => (
-              <option value={opt.kohdenimi}>{opt.kohdenimi}</option>
+              <option value={opt.idmatkakohde}>{opt.kohdenimi}</option>
             ))}
     </Form.Select>
     </Col>
     <Col>        
         <Form.Label>Alku pvm</Form.Label>
         <FloatingLabel label="YYYY-MM-DD">
-        <Form.Control id='alkupvm' placeholder="" />
+        <Form.Control placeholder="" />
         </FloatingLabel>
     </Col>
     <Col>
         <Form.Label>Loppu pvm</Form.Label>
         <FloatingLabel label="YYYY-MM-DD">
-        <Form.Control id='loppupvm' placeholder="" />
+        <Form.Control placeholder="" />
         </FloatingLabel>
     </Col>
     </Row>
@@ -125,7 +166,6 @@ function OmatMatkat(){
 
     <FloatingLabel controlId="floatingTextarea2" label="Tarina">
         <Form.Control
-        id='tarina'
         as="textarea"
         placeholder=""
         style={{ height: '100px' }}
