@@ -13,11 +13,12 @@ import pic from './banner.png';
 import { Link } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
 import Axios from 'axios';
+import { Login } from "./Login";
 
 /*
     TODO:
     #1 Rekisteröitymistietojen vieminen tietokantaan. DONE
-    #2
+    #2 Kirjautuminen. WIP
     #3
  */
 
@@ -64,12 +65,12 @@ function Kotisivut() {
     }, [])
     const handleSubmit = event => {
         event.preventDefault();
-        Axios.post("http://localhost:3001/matkaaja",{
-            etunimi:etunimi,
-            sukunimi:sukunimi,
-            nimimerkki:nimimerkki,
-            email:email,
-            password:password,
+        Axios.post("http://localhost:3001/matkaaja", {
+            etunimi: etunimi,
+            sukunimi: sukunimi,
+            nimimerkki: nimimerkki,
+            email: email,
+            password: password,
         });
         handleCloseR();
         alert(`Rekisteröityminen onnistui!`);
@@ -79,6 +80,12 @@ function Kotisivut() {
     const [showK, setShowK] = useState(false);
     const handleCloseK = () => setShowK(false);
     const handleShowK = () => setShowK(true);
+
+    const [token, setToken] = useState();
+
+    if (!token) {
+        return <Login setToken={setToken} />
+    }
 
     return (
         <div>
@@ -93,7 +100,7 @@ function Kotisivut() {
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
                         <Nav.Link><Button variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
-                        <Nav.Link><Button variant="outline-primary" size="sm" onClick={handleShowK}>Kirjaudu sisään</Button></Nav.Link>
+                        <Nav.Link href="login"><Button variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

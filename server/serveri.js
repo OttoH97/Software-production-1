@@ -3,18 +3,18 @@ const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
 const bodyParser = require("body-parser")
-const multer  = require('multer')
+const multer = require('multer')
 const path = require('path');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/data/uploads/')
+        cb(null, './public/data/uploads/')
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix + ".jpg")
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, file.fieldname + '-' + uniqueSuffix + ".jpg")
     }
-  })
+})
 
 var upload = multer({ storage: storage });
 
@@ -26,8 +26,17 @@ const db = mysql.createPool({
     user: "root",
     password: "Matkakertomus",
     database: "mydb",
-    port:3307,
+    port: 3307,
 })
+
+//Token kirjautuminen ...työn alla
+app.use('/login', (req, res) => {
+    res.send({
+        token: 'test123'
+    });
+});
+
+app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
 
 /*app.post('/create', (req,res)=>{
     const idmatkakohde = req.body.idmatkakohde;
@@ -70,7 +79,7 @@ app.post('/matkaaja', (req, res) => {
     );
 });
 
-app.post('/matkakohde',upload.single('kuva'), (req,res)=>{
+app.post('/matkakohde', upload.single('kuva'), (req, res) => {
     const kohdenimi = req.body.kohdenimi;
     const maa = req.body.maa;
     const paikkakunta = req.body.paikkakunta;
@@ -90,69 +99,69 @@ app.post('/matkakohde',upload.single('kuva'), (req,res)=>{
 
 
 app.get('/matkakohde/kuva/:tiedostonnimi', function (req, res) {
-    if(req.params.tiedostonnimi == null || req.params.tiedostonnimi.length <= 5)
+    if (req.params.tiedostonnimi == null || req.params.tiedostonnimi.length <= 5)
         res.send(404);
 
-    res.sendFile(path.join(__dirname,"./public/data/uploads/"+req.params.tiedostonnimi));
+    res.sendFile(path.join(__dirname, "./public/data/uploads/" + req.params.tiedostonnimi));
 });
 
-app.get('/matkakohde',(req,res)=>{
-    db.query("SELECT * FROM matkakohde",(err,result)=>{
-        if(err){
+app.get('/matkakohde', (req, res) => {
+    db.query("SELECT * FROM matkakohde", (err, result) => {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             res.send(result)
         }
     })
 })
 
-app.get('/tarina',(req,res)=>{
-    db.query("SELECT * FROM tarina",(err,result)=>{
-        if(err){
+app.get('/tarina', (req, res) => {
+    db.query("SELECT * FROM tarina", (err, result) => {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             res.send(result)
         }
     })
 })
 
-app.get('/matkaaja',(req,res)=>{
-    db.query("SELECT * FROM matkaaja",(err,result)=>{
-        if(err){
+app.get('/matkaaja', (req, res) => {
+    db.query("SELECT * FROM matkaaja", (err, result) => {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             res.send(result)
         }
     })
 })
 
-app.get('/matka',(req,res)=>{
-    db.query("SELECT * FROM matka",(err,result)=>{
-        if(err){
+app.get('/matka', (req, res) => {
+    db.query("SELECT * FROM matka", (err, result) => {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             res.send(result)
         }
     })
 })
 
-app.get('/matkakohdejatarina',(req,res)=>{
+app.get('/matkakohdejatarina', (req, res) => {
     db.query("SELECT matkakohde.idmatkakohde,matkakohde.kohdenimi,matkakohde.maa,matkakohde.paikkakunta,matkakohde.kuvausteksti,tarina.teksti from matkakohde INNER join tarina on matkakohde.idmatkakohde = tarina.idmatkaaja"
-    ,(err,result)=>{
-        if(err){
-            console.log(err)
-        }else{
-            res.send(result)
-            console.log(result)
-        }
-    })
+        , (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.send(result)
+                console.log(result)
+            }
+        })
 })
 
-app.get('/kuva',(req,res)=>{
-    db.query("SELECT * FROM kuva",(err,result)=>{
-        if(err){
+app.get('/kuva', (req, res) => {
+    db.query("SELECT * FROM kuva", (err, result) => {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             res.send(result)
         }
     })

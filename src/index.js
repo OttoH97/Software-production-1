@@ -8,6 +8,7 @@ import { Kotisivut } from "./kotisivut_sivu";
 import { Matkakohdesivu } from "./matkakohde_sivu";
 import { PorukanMatkat } from "./porukanmatkat_sivu";
 import { Jasensivu } from "./jasenet_sivu";
+import { Login } from "./Login"; //Token kirjautuminen ...työn alla
 //Bootstrap kirjasto / Route
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,6 +30,7 @@ ReactDOM.render(
         <Route path="matkakohde" element={<Matkakohdesivu />} />
         <Route path="pmatkat" element={<PorukanMatkat />} />
         <Route path="jasenet" element={<Jasensivu />} />
+        <Route path="login" element={<Login />}/>
       </Routes>
     </React.StrictMode>
   </BrowserRouter>,
