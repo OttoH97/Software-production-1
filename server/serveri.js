@@ -49,6 +49,42 @@ const db = mysql.createPool({
     );
 });*/
 
+app.post('/omatmatkatTarina', (req, res) => {
+    const idmatkakohde = req.body.idmatkakohde;
+    const pvm = req.body.pvm;
+    const teksti = req.body.teksti;
+    const idmatka = req.body.idmatka;
+
+    db.query('INSERT INTO tarina (idmatkakohde,pvm,teksti,idmatka) VALUES (?,?,?,?)'
+        , [idmatkakohde, pvm, teksti, idmatka],
+        (err, result) => {
+            if (err) {
+                console.log(err)
+            } else
+                res.send("Values inserted")
+        }
+    );
+});
+app.post('/omatmatkat', (req, res) => {
+    const idmatkaaja = req.body.idmatkaaja;
+    const alkupvm = req.body.alkupvm;
+    const loppupvm = req.body.loppupvm;
+    const yksityinen = req.body.yksityinen;
+    const idmatka = req.body.idmatka;
+
+    db.query('INSERT INTO matka (idmatkaaja,alkupvm,loppupvm,yksityinen,idmatka) VALUES (?,?,?,?,?)'
+        , [idmatkaaja, alkupvm, loppupvm, yksityinen, idmatka],
+        (err, result) => {
+            if (err) {
+                console.log(err)
+            } else
+                res.send("Values inserted")
+        }
+    );
+});
+
+
+
 // Rekisteröitymiseen
 app.post('/matkaaja', (req, res) => {
     const idmatkaaja = req.body.idmatkaaja;
