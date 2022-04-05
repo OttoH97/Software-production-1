@@ -20,10 +20,6 @@ function PorukanMatkat() {
 
     const loginDone = (loggedUser) =>{setUser(loggedUser);}
 
-    
-
-
-
     return (
 
         <div>
@@ -45,8 +41,6 @@ function PorukanMatkat() {
                 {user ? 
                 <Taulu /> : <Kirjaudu onLogin = {(user) => loginDone(user)} />} 
             
-
-
         </div>
 
     )
@@ -60,29 +54,25 @@ export const Taulu = (props) => {
     const [tarina,setTarina] = useState([]);
 
     const [showT, setShowT] = useState(false);
+    const [matka,setMatka] = useState('')
+    const [modalData,setModalData] = useState(null);
+    
 
     const showStory = () => setShowT(true);
     const closeStory = () => setShowT(false);
+    
 
 
     useEffect(async () => {
-        Axios.get("http://localhost:3001/matkakohde").then((response) => {
+        Axios.get("http://localhost:3001/matkakohdejatarina").then((response) => {
             setMatkataulu(response.data);
             console.log(response.data);
 
         });
     }, [])
 
-    useEffect(async () => {
-        Axios.get("http://localhost:3001/tarina").then((response) => {
-            setTarina(response.data);
-            console.log(response.data);
-
-        });
-    }, [])
-
     
-
+    
     const rivit = matkataulu.map((val) => {
         return <tr key={val.id}>
             <td>{val.idmatkakohde}</td>
@@ -93,16 +83,14 @@ export const Taulu = (props) => {
             <td>{val.kuva}</td>
             <td><Button
                 variant="primary"
-                onClick={showStory}>Katso</Button> </td>
-
+                onClick={()=>{setModalData(val.teksti);showStory(true)}}>Katso</Button></td>
+                
+            
         </tr>
+        
+        
     })
 
-    const tarinat = tarina.map((v)=>{
-        return <tr key = {v.id}>
-            <td>{v.teksti}</td>
-        </tr>
-    })
     return (
         <div className='matkataulu'>
 
@@ -123,16 +111,18 @@ export const Taulu = (props) => {
                         {rivit}
                     </tbody>
                 </Table>
+                
                 <Modal show={showT} onHide={closeStory} >
                     <Modal.Header closeButton>
-                        Tarinat
+                        Tarina
                     </Modal.Header>
 
                     <ModalBody>
-                        {tarinat}
+                   {modalData}
                     </ModalBody>
 
                 </Modal>
+                
 
             </Form>
         </div>
