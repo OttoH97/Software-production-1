@@ -81,11 +81,11 @@ function Kotisivut() {
     const handleCloseK = () => setShowK(false);
     const handleShowK = () => setShowK(true);
 
-    const [token, setToken] = useState();
+   /* const [token, setToken] = useState();
 
     if (!token) {
         return <Login setToken={setToken} />
-    }
+    }*/
 
     return (
         <div>

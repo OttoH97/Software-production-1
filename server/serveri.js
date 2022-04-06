@@ -5,6 +5,11 @@ const cors = require('cors')
 const bodyParser = require("body-parser")
 const multer = require('multer')
 const path = require('path');
+const cookieParser = require('cookie-parser');//npm install cookie-parser
+const session = require('express-session');//npm install express-session
+const bcrypt = require('bcrypt');//npm install bcrypt
+const { useSSRSafeId } = require('@react-aria/ssr')
+const saltRounds = 10;
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -18,8 +23,24 @@ const storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-app.use(cors());
+//app.use(cors());
 app.use(express.json());
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true
+}))
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(session({
+    key: "userId",
+    secret : "subscribe",
+    resave : false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 60 * 60 * 24,
+    }
+}))
 
 const db = mysql.createPool({
     host: "localhost",
@@ -29,14 +50,43 @@ const db = mysql.createPool({
     port: 3307,
 })
 
-//Token kirjautuminen ...työn alla
+/*Token kirjautuminen ...työn alla
 app.use('/login', (req, res) => {
     res.send({
         token: 'test123'
     });
+});*/
+app.get("/login",(req,res)=>{
+    if(req.session.user){
+        res.send({loggedIn: true, user: req.session.user})
+    }else{
+        res.send({loggedIn:false})
+    }
+})
+app.post('/login', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    db.query("SELECT * FROM matkaaja where email = ? and password = ?",
+        [email, password],
+        (err, result) => {
+            
+            if (err) {
+                res.send({ err: err })
+            }
+            
+            if (result.length>0) {
+                req.session.user = result;
+                console.log(req.session.user);
+                res.send({message:"Terve " + "" + email,data:result})
+            }
+            else {
+                res.send({ message: "Väärä käyttäjänimi/salasana" });
+            }
+        }
+    );
 });
 
-app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
+//app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
 
 /*app.post('/create', (req,res)=>{
     const idmatkakohde = req.body.idmatkakohde;
@@ -171,6 +221,8 @@ app.get('/matkaaja', (req, res) => {
     })
 })
 
+
+
 app.get('/matka', (req, res) => {
     db.query("SELECT * FROM matka", (err, result) => {
         if (err) {
@@ -181,16 +233,16 @@ app.get('/matka', (req, res) => {
     })
 })
 
-app.get('/matkakohdejatarina',(req,res)=>{
+app.get('/matkakohdejatarina', (req, res) => {
     db.query("SELECT matkakohde.idmatkakohde,matkakohde.kohdenimi,matkakohde.maa,matkakohde.paikkakunta,matkakohde.kuvausteksti,tarina.teksti from matkakohde INNER join tarina on matkakohde.idmatkakohde = tarina.idmatkakohde"
-    ,(err,result)=>{
-        if(err){
-            console.log(err)
-        }else{
-            res.send(result)
-            console.log(result)
-        }
-    })
+        , (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.send(result)
+                console.log(result)
+            }
+        })
 })
 
 app.get('/kuva', (req, res) => {
