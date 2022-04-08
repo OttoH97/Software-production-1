@@ -14,11 +14,6 @@ import {Routes, Route, BrowserRouter as Router,useNavigate} from 'react-router-d
 
 function PorukanMatkat() {
 
-    
-    const [user,setUser] = useState(null);
-    
-
-    const loginDone = (loggedUser) =>{setUser(loggedUser);}
 
     return (
 
@@ -38,8 +33,8 @@ function PorukanMatkat() {
                 </Navbar.Collapse>
             </Navbar>
              
-                {user ? 
-                <Taulu /> : <Kirjaudu onLogin = {(user) => loginDone(user)} />} 
+                
+                <Taulu/>
             
         </div>
 
@@ -128,48 +123,6 @@ export const Taulu = (props) => {
     )
 
 }
-export const Kirjaudu = (props) => {
 
-    let navigate = useNavigate();
 
-    const [etunimi, setEtunimi] = useState('');
-    const [hlonro, setHloNro] = useState('');
-
-    const onClick = (event) => {
-        if (props.onLogin != null) {
-
-            props.onLogin(etunimi + ',' + hlonro);
-            console.log(props.onLogin)
-            navigate("/pmatkat")
-
-        }
-    }
-
-    return (
-        <div>
-
-            <label>
-                Etunimi
-                <input
-                    type="text"
-                    value={etunimi}
-                    onChange={(e) => setEtunimi(e.target.value)} />
-            </label>
-
-            <label>
-                Henkilönumero
-                <input
-                    type="text"
-                    value={hlonro}
-                    onChange={(e) => setHloNro(e.target.value)} />
-
-            </label>
-
-            <button onClick={(e) => onClick(e)}>Kirjaudu</button>
-
-        </div>
-
-    )
-
-}
 export { PorukanMatkat };
