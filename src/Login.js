@@ -31,7 +31,8 @@ function Login({ setToken }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loginStatus, setLoginStatus] = useState('');
+    const [loginStatus, setLoginStatus] = useState(false);
+    const [msg, setMsg] = useState('');
 
 
     /*const handleSubmit = async e => {
@@ -43,34 +44,48 @@ function Login({ setToken }) {
         setToken(token);
     }*/
 
-    Axios.defaults.withCredentials = true;
+    Axios.defaults.withCredentials = true; 
 
+
+    //palauttaa syötetyn sähköpostin ja salasanan
     const login = (e) => {
-
 
         Axios.post("http://localhost:3001/login", {
             email: email,
             password: password,
-            
-        }).then((response) => {
-            if (response.data.message) {
-                setLoginStatus(response.data.message)
-            } else {
-                setLoginStatus(response.data[0].email);
-            }
-            console.log(response.data)
 
+        }).then((response) => {
+            console.log(response);
+
+            //jos käyttäjää ei löydy tietokannasta
+
+            if (!response.data.auth) {
+
+                //tulostetaan viesti
+                setLoginStatus(false)
+                setMsg(response.data.message);
+
+            } else {
+                console.log(response.data);
+                localStorage.setItem("token", + response.data.token);
+                setMsg(response.data.message);
+                setLoginStatus(true);
+            }
 
         });
 
     };
-    useEffect(()=>{
-        Axios.get("http://localhost:3001/login").then((response)=>{
-            if(response.data.loggedIn == true){
-                setLoginStatus(response.data.user[0].email)
+    
+
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/login").then((response) => {
+            if (response.data.loggedIn == true) {
+                setLoginStatus(true)
+                setMsg(response.data.user[0].email);
+                console.log(response.data)
             }
         })
-    },[])
+    }, [])
 
     return (
         <Container fluid='md'>
@@ -112,7 +127,8 @@ function Login({ setToken }) {
                             <Button style={{ marginTop: 10 }} variant='primary' onClick={login}>Kirjaudu</Button>
                         </div>
                     </Row>
-                    <h1>{loginStatus}</h1>
+                    <p>{msg}</p>
+                    
                 </Form>
             </div>
         </Container>

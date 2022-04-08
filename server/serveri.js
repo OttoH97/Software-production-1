@@ -7,9 +7,10 @@ const multer = require('multer')
 const path = require('path');
 const cookieParser = require('cookie-parser');//npm install cookie-parser
 const session = require('express-session');//npm install express-session
-const bcrypt = require('bcrypt');//npm install bcrypt
+//const bcrypt = require('bcrypt');//npm install bcrypt, voidaan cyptata tietokannan salasanat
+const jsonwebtoken = require('jsonwebtoken');
 const { useSSRSafeId } = require('@react-aria/ssr')
-const saltRounds = 10;
+//const saltRounds = 10;
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -30,12 +31,13 @@ app.use(cors({
     methods: ["GET", "POST"],
     credentials: true
 }))
+//cookiet ja session määritelmä ettei käyttäjä kirjaudu ulos sivua päivittäessä
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     key: "userId",
-    secret : "subscribe",
-    resave : false,
+    secret: "matkakertomus",
+    resave: false,
     saveUninitialized: false,
     cookie: {
         expires: 60 * 60 * 24,
@@ -56,31 +58,44 @@ app.use('/login', (req, res) => {
         token: 'test123'
     });
 });*/
-app.get("/login",(req,res)=>{
-    if(req.session.user){
-        res.send({loggedIn: true, user: req.session.user})
-    }else{
-        res.send({loggedIn:false})
+
+//login sivulta haetaan tieto onko käyttäjä kirjautunut ja aloitetaan käyttäjälle ????sessio????
+app.get("/login", (req, res) => {
+    if (req.session.user) {
+        res.json({ loggedIn: true, user: req.session.user })
+    } else {
+        res.send({ loggedIn: false })
     }
 })
+
+
+//Matkaaja taulusta sähköpostin ja salasanan hakeminen
 app.post('/login', (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     db.query("SELECT * FROM matkaaja where email = ? and password = ?",
-        [email, password],
+        [email, password],  //tietokannasta haetaan sposti ja salasana, jotka ovat jo olemassa
         (err, result) => {
-            
+
             if (err) {
                 res.send({ err: err })
             }
-            
-            if (result.length>0) {
+
+            if (result.length > 0) {  //jos palauttaa jotain
+
+                const id = result[0].idmatkaaja;
+                const token = jsonwebtoken.sign({ id }, "jwtSecret", {
+                    expiresIn: 300,
+                })
                 req.session.user = result;
                 console.log(req.session.user);
-                res.send({message:"Terve " + "" + email,data:result})
+                //Tervehdys käyttäjälle
+                res.json({ auth: true, token: token, message: "Terve " + "" + email, data: result })
             }
+            
+            //Jos käyttäjää ei löydy tietokannasta
             else {
-                res.send({ message: "Väärä käyttäjänimi/salasana" });
+                res.json({ auth: false, message: "Käyttäjää ei ole olemassa"})  
             }
         }
     );
