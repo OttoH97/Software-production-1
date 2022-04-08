@@ -217,7 +217,7 @@ function Ylapalkki() {
                     <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                     <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
                     <Nav.Link><Button variant="outline-primary" size="sm"  onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
-                    <Nav.Link><Button variant="outline-primary" size="sm"  onClick={handleShowK}>Kirjaudu sisään</Button></Nav.Link>
+                    <Nav.Link href="login"><Button variant="outline-primary" size="sm"  /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
