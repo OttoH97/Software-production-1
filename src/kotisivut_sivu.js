@@ -10,10 +10,11 @@ import { Form, Button, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { Accordion } from 'react-bootstrap';
 import { Image } from 'react-bootstrap';
 import pic from './banner.png';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
 import Axios from 'axios';
 import { Login } from "./Login";
+import { click } from '@testing-library/user-event/dist/click';
 
 /*
     TODO:
@@ -24,6 +25,9 @@ import { Login } from "./Login";
 
 
 function Kotisivut() {
+
+    const navigate = useNavigate();
+    const toLogin = ()  => navigate('/Login');
 
     // Rekisteröitymiseen
     const [show, setShow] = useState(false);
@@ -72,8 +76,7 @@ function Kotisivut() {
             email: email,
             password: password,
         });
-        handleCloseR();
-        alert(`Rekisteröityminen onnistui!`);
+        toLogin();
     };
 
     //Kirjautumiseen
