@@ -6,7 +6,7 @@ import { Container } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
-import { Form, Button, Row, Col,FloatingLabel,ListGroup,Table } from 'react-bootstrap';
+import { Form, Button, Row, Col,FloatingLabel,ListGroup,Table,Check } from 'react-bootstrap';
 import Axios from 'axios';
 
 
@@ -19,8 +19,8 @@ function OmatMatkat(){
     //matka
     const [alkupaivamaara, setAlkupaivamaara] = useState([]);
     const [loppupaivamaara, setLoppupaivamaara] = useState([]);
-    const [matkaajaID, setMatkaajaID] = useState([]);
-    const [yksityinen, setYksityinen] = useState([]);
+    const [matkaajaID, setMatkaajaID] = useState("1");
+    const [yksityinen, setYksityinen] = useState(["0"]);
     //tarina
     const [matkakohdeID, setMatkakohdeID] = useState([]);
     const [paivamaara, setPaivamaara] = useState([]);
@@ -39,13 +39,19 @@ function OmatMatkat(){
     const handleMatkakohdeID = event => {
         setMatkakohdeID(event.target.value)       
     };
+    const handleYksityinen = event => {
+        if(event.target.checked)        
+            setYksityinen("1")
+            else
+            setYksityinen("0")    
+    };
 
     var currentdate = new Date(); 
         var datetime = currentdate.getFullYear() + "-"
                 + (currentdate.getMonth()+1)  + "-" 
                 + currentdate.getDate();
-         
 
+             
     useEffect(async () => {
         Axios.get("http://localhost:3001/matka").then((response) => {
             setMatka(response.data);
@@ -67,7 +73,7 @@ function OmatMatkat(){
     }, [])
 
     const handleMatka = event => {
-        event.preventDefault();
+        event.preventDefault();        
         Axios.post("http://localhost:3001/omatmatkat",{
             idmatkaaja:matkaajaID,
             alkupvm:alkupaivamaara,
@@ -151,29 +157,43 @@ function OmatMatkat(){
     <Col>        
         <Form.Label>Alku pvm</Form.Label>
         <FloatingLabel label="YYYY-MM-DD">
-        <Form.Control placeholder="" />
+        <Form.Control onChange={handlealkupvm} value={alkupaivamaara} placeholder="" />
         </FloatingLabel>
     </Col>
     <Col>
         <Form.Label>Loppu pvm</Form.Label>
         <FloatingLabel label="YYYY-MM-DD">
-        <Form.Control placeholder="" />
+        <Form.Control onChange={handleloppupvm} value={loppupaivamaara} placeholder="" />
         </FloatingLabel>
     </Col>
     </Row>
 
     <br></br>
-
+    <Row><Col>
     <FloatingLabel controlId="floatingTextarea2" label="Tarina">
         <Form.Control
+        onChange={handleTarina}
         as="textarea"
         placeholder=""
         style={{ height: '100px' }}
         />
         </FloatingLabel>
-        <br></br>
-        <Button variant="success">Luo</Button>{' '}
+        
+        
+    </Col></Row>
+
+    <Row><Col>
+    <Form.Check 
+    type="checkbox"
+    id="yksityinen"
+    label="Yksityinen"
+    onChange={handleYksityinen}
+    /> 
     
+    </Col></Row>
+    <br></br>
+
+    <Button variant="success" onClick={handleMatka}>Luo</Button>{' '}
     </Form>
     </Container>
 </div>

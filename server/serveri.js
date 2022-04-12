@@ -146,8 +146,8 @@ app.post('/omatmatkat', (req, res) => {
     const yksityinen = req.body.yksityinen;
     const idmatka = req.body.idmatka;
 
-    db.query('INSERT INTO matka (idmatkaaja,alkupvm,loppupvm,yksityinen,idmatka) VALUES (?,?,?,?,?)'
-        , [idmatkaaja, alkupvm, loppupvm, yksityinen, idmatka],
+    db.query('INSERT INTO matka (idmatkaaja,alkupvm,loppupvm,yksityinen) VALUES (?,?,?,?)'
+        , [idmatkaaja,alkupvm,loppupvm,yksityinen],
         (err, result) => {
             if (err) {
                 console.log(err)
