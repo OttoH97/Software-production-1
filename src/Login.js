@@ -29,6 +29,8 @@ import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
 
 function Login({ setToken }) {
 
+    const navigate = useNavigate();
+    const toKotisivu = ()  => window.location.href = "http://localhost:3000";
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginStatus, setLoginStatus] = useState(false);
@@ -67,9 +69,12 @@ function Login({ setToken }) {
 
             } else {
                 console.log(response.data);
-                localStorage.setItem("token", + response.data.token);
+                localStorage.setItem("user", email); //käyttäjän sänhöposti tallennetaan localStorageen
+                localStorage.setItem("token", response.data.token); //tokeni tallennetaan localStorageen
                 setMsg(response.data.message);
                 setLoginStatus(true);
+                // console.log("user:" + localStorage.getItem("user") + " token:" + localStorage.getItem("token"));
+                toKotisivu(); //kirjautumisen jälkeen käyttäjä heitetään takaisin kotisivulle
             }
 
         });

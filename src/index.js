@@ -8,7 +8,7 @@ import { Kotisivut } from "./kotisivut_sivu";
 import { Matkakohdesivu } from "./matkakohde_sivu";
 import { PorukanMatkat } from "./porukanmatkat_sivu";
 import { Jasensivu } from "./jasenet_sivu";
-import { Login } from "./Login"; //Token kirjautuminen ...työn alla
+import { Login } from "./Login";
 //Bootstrap kirjasto / Route
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';

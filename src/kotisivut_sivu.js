@@ -20,11 +20,21 @@ import { click } from '@testing-library/user-event/dist/click';
     TODO:
     #1 Rekisteröitymistietojen vieminen tietokantaan. DONE
     #2 Kirjautuminen. WIP
-    #3
+    #3 Session storage kirjautumiselle. WIP
  */
 
 
 function Kotisivut() {
+
+    const kirjautunut = () => {
+        if (!localStorage.getItem("user") == ''){
+            console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
+        }
+        else
+            console.log("Et ole kirjautunut sisään vielä!");
+    };
+
+    kirjautunut();
 
     const navigate = useNavigate();
     const toLogin = ()  => navigate('/Login');
@@ -83,12 +93,9 @@ function Kotisivut() {
     const [showK, setShowK] = useState(false);
     const handleCloseK = () => setShowK(false);
     const handleShowK = () => setShowK(true);
-
-   /* const [token, setToken] = useState();
-
-    if (!token) {
-        return <Login setToken={setToken} />
-    }*/
+    const handleLogOut = () => {
+        localStorage.clear();
+    };
 
     return (
         <div>
@@ -103,7 +110,8 @@ function Kotisivut() {
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
                         <Nav.Link><Button variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
-                        <Nav.Link href="login"><Button variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
+                        <Nav.Link href="login"><Button id='kirjaudu' variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
+                        <Nav.Link><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
