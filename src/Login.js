@@ -36,6 +36,16 @@ function Login({ setToken }) {
     const [loginStatus, setLoginStatus] = useState(false);
     const [msg, setMsg] = useState('');
 
+    const kirjautunut = () => {
+        if (!localStorage.getItem("user") == ''){
+            console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
+        }
+        else
+            console.log("Et ole kirjautunut sisään vielä!");
+    };
+
+    kirjautunut();
+
 
     /*const handleSubmit = async e => {
         e.preventDefault();
@@ -69,7 +79,7 @@ function Login({ setToken }) {
 
             } else {
                 console.log(response.data);
-                localStorage.setItem("user", email); //käyttäjän sänhöposti tallennetaan localStorageen
+                localStorage.setItem("user", email); //käyttäjän sähköposti tallennetaan localStorageen
                 localStorage.setItem("token", response.data.token); //tokeni tallennetaan localStorageen
                 setMsg(response.data.message);
                 setLoginStatus(true);

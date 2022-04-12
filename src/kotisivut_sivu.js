@@ -20,11 +20,12 @@ import { click } from '@testing-library/user-event/dist/click';
     TODO:
     #1 Rekisteröitymistietojen vieminen tietokantaan. DONE
     #2 Kirjautuminen. WIP
-    #3 Session storage kirjautumiselle. WIP
+    #3 Session storage kirjautumiselle. DONE
  */
 
 
 function Kotisivut() {
+
 
     const kirjautunut = () => {
         if (!localStorage.getItem("user") == ''){
@@ -95,6 +96,7 @@ function Kotisivut() {
     const handleShowK = () => setShowK(true);
     const handleLogOut = () => {
         localStorage.clear();
+        window.location.reload(true);
     };
 
     return (
