@@ -28,7 +28,7 @@ var upload = multer({ storage: storage });
 app.use(express.json());
 app.use(cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
     credentials: true
 }))
 //cookiet ja session määritelmä ettei käyttäjä kirjaudu ulos sivua päivittäessä
@@ -198,6 +198,44 @@ app.post('/matkakohde', upload.single('kuva'), (req, res) => {
     );
 });
 
+app.delete('/matkakohde/:idmatkakohde', (req, res) => {
+    const idmatkakohde = req.params.idmatkakohde;
+    db.query("DELETE FROM matkakohde WHERE idmatkakohde=?",idmatkakohde, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+})
+
+app.post('/matkakohde/:idmatkakohde',upload.single('kuva'), (req, res) => {
+    const idmatkakohde = req.params.idmatkakohde;
+    const kohdenimi = req.body.kohdenimi;
+    const maa = req.body.maa;
+    const paikkakunta = req.body.paikkakunta;
+    const kuvausteksti = req.body.kuvausteksti;
+    var kuva = undefined;
+
+    var query = "UPDATE matkakohde SET kohdenimi = ?, maa = ?, paikkakunta = ?, kuvausteksti = ?"
+
+    if (req.file) {
+        kuva = req.file.filename;
+        query += ", kuva = '"+ kuva+"'";
+    }
+
+    query += " WHERE idmatkakohde = ?";
+    
+
+    db.query(query,
+    [kohdenimi, maa, paikkakunta, kuvausteksti, idmatkakohde], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+})
 
 app.get('/matkakohde/kuva/:tiedostonnimi', function (req, res) {
     if (req.params.tiedostonnimi == null || req.params.tiedostonnimi.length <= 5)
