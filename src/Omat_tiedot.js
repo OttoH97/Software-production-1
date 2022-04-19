@@ -1,6 +1,7 @@
 //Omat tiedot hallinta
 import logo from './logo.svg';
 import './App.css';
+import React from "react";
 import {useState, useEffect} from 'react';
 import { Container, FormGroup } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
@@ -12,15 +13,21 @@ import Axios from 'axios';
 
 function OmatSivut() {
 
+    const [email, setSahkoposti] = useState(localStorage.getItem("user"));
     const [tiedot, setTiedot] = useState([]);
+    const [kayttaja, setKayttaja] = useState([]);
 
     useEffect(async () => {
         Axios.get("http://localhost:3001/matkaaja").then((response) => {
             setTiedot(response.data);
             console.log(response.data);
+            setKayttaja(tiedot.find(email))
+            console.log(kayttaja);
+            
         });
     }, [])
-
+    
+    
 
     return(
 <div>

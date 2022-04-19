@@ -59,6 +59,18 @@ app.use('/login', (req, res) => {
     });
 });*/
 
+app.get('/kirjautunut', (req, res) => {
+    const email = req.body.email;
+
+    db.query("SELECT * FROM matkaaja where email = ?",[email],(err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+})
+
 //login sivulta haetaan tieto onko käyttäjä kirjautunut ja aloitetaan käyttäjälle ????sessio????
 app.get("/login", (req, res) => {
     if (req.session.user) {
