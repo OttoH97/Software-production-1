@@ -8,12 +8,26 @@ import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col, FloatingLabel, Table } from 'react-bootstrap';
 import Axios from 'axios';
 import { Modal } from 'react-bootstrap';
-import {Routes, Route, BrowserRouter as Router,useNavigate} from 'react-router-dom'
+import { Routes, Route, BrowserRouter as Router, useNavigate } from 'react-router-dom'
 
 
 
 function PorukanMatkat() {
-
+    let navigate = useNavigate();
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/login").then((response) => {
+            if (!localStorage.getItem("user") == ''){
+                console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
+                console.log(response.data);
+            }
+            else{
+                console.log("Et ole kirjautunut sisään vielä!");
+                navigate("/login")
+            }
+        })
+    }, [])
+    
+    
 
     return (
 
@@ -28,14 +42,15 @@ function PorukanMatkat() {
                         <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
+                        <Nav.Link href="login">Kirjaudu</Nav.Link>
 
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-             
-                
-                <Taulu/>
-            
+
+            <Taulu />
+
+
         </div>
 
     )
@@ -46,12 +61,14 @@ function PorukanMatkat() {
 export const Taulu = (props) => {
     const [matkataulu, setMatkataulu] = useState([]);
     const [showT, setShowT] = useState(false);
-    const [modalData,setModalData] = useState(null);
-    
+    const [modalData, setModalData] = useState(null);
+
 
     const showStory = () => setShowT(true);
     const closeStory = () => setShowT(false);
-    
+
+    const [msg, setMsg] = useState('');
+
 
 
     useEffect(async () => {
@@ -62,11 +79,9 @@ export const Taulu = (props) => {
         });
     }, [])
 
-    
-    
     const rivit = matkataulu.map((val) => {
 
-        
+
         return <tr key={val.idmatkakohde}>
             <td>{val.idmatkakohde}</td>
             <td>{val.kohdenimi}</td>
@@ -76,13 +91,14 @@ export const Taulu = (props) => {
             <td>{val.kuva}</td>
             <td><Button
                 variant="primary"
-                onClick={()=>{setModalData(val.teksti);showStory(true)}}>Katso</Button></td>
-                
-            
+                onClick={() => { setModalData(val.teksti); showStory(true) }}>Katso</Button></td>
+
+
         </tr>
-        
-        
+
+
     })
+
 
     return (
         <div className='matkataulu'>
@@ -105,19 +121,19 @@ export const Taulu = (props) => {
                         {rivit}
                     </tbody>
                 </Table>
-                
+
                 <Modal show={showT} onHide={closeStory} >
                     <Modal.Header closeButton>
                         <h1>Tarina</h1>
                     </Modal.Header>
 
                     <ModalBody>
-                   {modalData}
+                        {modalData}
                     </ModalBody>
 
                 </Modal>
-                
 
+                <p>{msg}</p>
             </Form>
         </div>
     )
