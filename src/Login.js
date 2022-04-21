@@ -98,8 +98,14 @@ function Login({ setToken }) {
                 setMsg(response.data.user[0].email);
                 console.log(response.data)
             }
+           
         })
     }, [])
+    const handleLogOut = () => {
+        localStorage.clear();
+        window.location.reload(true);
+        setMsg("Et ole kirjautunut sisään")
+    };
 
     return (
         <Container fluid='md'>
@@ -116,7 +122,7 @@ function Login({ setToken }) {
                             <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                             <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
                             <Nav.Link href="login">Kirjaudu</Nav.Link>
-
+                            <Nav.Link><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -141,7 +147,9 @@ function Login({ setToken }) {
                             <Button style={{ marginTop: 10 }} variant='primary' onClick={login}>Kirjaudu</Button>
                         </div>
                     </Row>
+                    
                     <p>{msg}</p>
+                    
                     
                 </Form>
             </div>

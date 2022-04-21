@@ -13,19 +13,24 @@ import { Routes, Route, BrowserRouter as Router, useNavigate } from 'react-route
 
 
 function PorukanMatkat() {
+
     let navigate = useNavigate();
     useEffect(async () => {
         Axios.get("http://localhost:3001/login").then((response) => {
             if (!localStorage.getItem("user") == ''){
                 console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
-                console.log(response.data);
+                
             }
             else{
-                console.log("Et ole kirjautunut sisään vielä!");
                 navigate("/login")
             }
         })
     }, [])
+
+    const handleLogOut = () => {
+        localStorage.clear();
+        window.location.reload(true);
+    };
     
     
 
@@ -43,7 +48,7 @@ function PorukanMatkat() {
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
                         <Nav.Link href="login">Kirjaudu</Nav.Link>
-
+                        <Nav.Link><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
