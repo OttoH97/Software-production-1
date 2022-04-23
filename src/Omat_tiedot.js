@@ -14,21 +14,58 @@ import Axios from 'axios';
 function OmatSivut() {
 
     const [email, setSahkoposti] = useState(localStorage.getItem("user"));
-    const [tiedot, setTiedot] = useState([]);
     const [kayttaja, setKayttaja] = useState([]);
 
-    useEffect(async () => {
-        Axios.get("http://localhost:3001/matkaaja").then((response) => {
-            setTiedot(response.data);
-            console.log(response.data);
-            setKayttaja(tiedot.find(email))
-            console.log(kayttaja);
-            
-        });
-    }, [])
-    
+    const [id, setID] = useState('');
+    const [etunimi, setEtunimi] = useState('');
+    const [sukunimi, setSukunimi] = useState('');
+    const [nimimerkki, setNimimerkki] = useState('');
+    const [esittely, setEsittely] = useState('');
+    const [paikkakunta, setPaikkakunta] = useState('');
     
 
+    useEffect(async () => {
+       Axios.post("http://localhost:3001/kirjautunut",{email: email,}).then((response) => {
+            setKayttaja(response.data);            
+            console.log('Kirjautunut:',response.data);
+            setID(response.data[0].idmatkaaja);
+            setEtunimi(response.data[0].etunimi);
+            setSukunimi(response.data[0].sukunimi);
+            setNimimerkki(response.data[0].nimimerkki);
+            setEsittely(response.data[0].esittely);
+            setPaikkakunta(response.data[0].paikkakunta);
+        });
+    }, [])
+
+    const handleEtunimi = event => {
+        setEtunimi(event.target.value)
+    };
+    const handleSukunimi = event => {
+        setSukunimi(event.target.value)
+    };
+    const handleNimimerkki = event => {
+        setNimimerkki(event.target.value)
+    };
+    const handleEsittely = event => {
+        setEsittely(event.target.value)
+    };
+    const handlePaikkakunta = event => {
+        setPaikkakunta(event.target.value)
+    };
+    const handleMuutos = event => {
+        event.preventDefault();        
+        Axios.post("http://localhost:3001/paivitatiedot",{
+            idmatkaaja:id,
+            etunimi:etunimi,
+            sukunimi:sukunimi,
+            nimimerkki:nimimerkki,
+            esittely,esittely,
+            paikkakunta,paikkakunta,            
+        });
+        alert(`Päivitys onnistui`);
+    };
+
+    
     return(
 <div>
 <Navbar  bg="light" expand="lg">        
@@ -52,28 +89,30 @@ function OmatSivut() {
     <Row>
     <Col>
         <Form.Label>Etunimi</Form.Label>
-        <Form.Control id='etunimi' placeholder="" />
+        <Form.Control name='etunimi' onChange={handleEtunimi} value={etunimi} placeholder="" />
     </Col>
     <Col>
         <Form.Label>Sukunimi</Form.Label>
-        <Form.Control id='sukunimi' placeholder="" />
+        <Form.Control name='sukunimi' onChange={handleSukunimi} value={sukunimi} placeholder="" />
     </Col>
     <Col>
         <Form.Label>Nimimerkki</Form.Label>
-        <Form.Control id='nimimerkki' placeholder="" />
+        <Form.Control name='nimimerkki' onChange={handleNimimerkki} value={nimimerkki} placeholder="" />
     </Col>
     </Row>
     </Form.Group>
     
         <Form.Group className="mb-2" controlId="salasana">
         <Form.Label>Paikkakunta</Form.Label>
-        <Form.Control id='paikkakunta' type="text" placeholder="" />
+        <Form.Control name='paikkakunta' onChange={handlePaikkakunta} value={paikkakunta} type="text" placeholder="" />
         </Form.Group>
     
     
         <FloatingLabel controlId="floatingTextarea2" label="Esittely">
         <Form.Control
-        id='esittely'
+        onChange={handleEsittely} 
+        value={esittely}
+        name='esittely'
         as="textarea"
         placeholder=""
         style={{ height: '100px' }}
@@ -84,15 +123,11 @@ function OmatSivut() {
     <Row>
     <Col>
         <Form.Label>Sähköposti</Form.Label>
-        <Form.Control readOnly placeholder="" />
-    </Col>
-    <Col>
-        <Form.Label>Salasana</Form.Label>
-        <Form.Control readOnly placeholder="" />
+        <Form.Control name='sahkoposti' value={email} readOnly placeholder="" />
     </Col>
     </Row>
     <br></br>
-    <Button variant="success">Tallenna</Button>{' '}
+    <Button variant="success" onClick={handleMuutos}>Tallenna</Button>{' '}
 </Form>
 </Container>
 </div>

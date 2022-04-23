@@ -59,10 +59,30 @@ app.use('/login', (req, res) => {
     });
 });*/
 
-app.get('/kirjautunut', (req, res) => {
+//Haetaan kirjautuneen käyttäjän omat tiedot
+app.post('/kirjautunut', (req, res) => {
     const email = req.body.email;
 
     db.query("SELECT * FROM matkaaja where email = ?",[email],(err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+})
+
+//Käyttäjän päivitys
+app.post('/paivitatiedot', (req, res) => {
+    const etunimi = req.body.etunimi;
+    const sukunimi = req.body.sukunimi;
+    const nimimerkki = req.body.nimimerkki;
+    const paikkakunta = req.body.paikkakunta;
+    const esittely = req.body.esittely;
+    const idmatkaaja = req.body.idmatkaaja;
+
+    db.query("UPDATE matkaaja SET etunimi = ?, sukunimi = ?, nimimerkki = ?, paikkakunta = ?, esittely = ? WHERE idmatkaaja = ?",
+    [etunimi, sukunimi, nimimerkki, paikkakunta, esittely, idmatkaaja],(err, result) => {
         if (err) {
             console.log(err)
         } else {
