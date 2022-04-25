@@ -175,7 +175,7 @@ app.post('/omatmatkatTarina', (req, res) => {
     const idmatka = req.body.idmatka;
 
     db.query('INSERT INTO tarina (idmatkakohde,pvm,teksti,idmatka) VALUES (?,?,?,?)'
-        , [idmatkakohde, pvm, teksti, idmatka],
+        , [pvm, idmatkakohde, teksti, idmatka],
         (err, result) => {
             if (err) {
                 console.log(err)
@@ -197,17 +197,20 @@ app.post('/omatmatkat', (req, res) => {
             if (err) {
                 console.log(err)
             } else
-                res.send("Values inserted")
+                res.send(result);
         }
     );
+      
 });
 
-app.delete('/poistamatka', (req, res) => {
-    const idmatka = req.body.idmatka
-    const poista = 'DELETE FROM matka WHERE idmatka = ?';
-
-    db.query(poista, idmatka, (err, result) => {
-        
+app.delete('/poistamatka/:idmatka', (req, res) => {
+    const idmatka = req.params.idmatka
+    db.query('DELETE FROM matka WHERE idmatka = ?',idmatka, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
     })
 })
 
