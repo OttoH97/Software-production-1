@@ -1,40 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { Ylapalkki } from './matkakohde_sivu';
+import { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Navbar, Table } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
+import Axios from 'axios';
 
 
 function Jasensivu() {
-
-    const data = [
-        {
-            "id": 5,
-            "etunimi": "Collins",
-            "sukunimi": "Burgess",
-            "nimimerkki": "Matkustelija",
-            "paikkakunta": "Helsinki",
-            "esittely": "Lorem ipsum dolor sit amet"
-        },
-        {
-            "id": 8,
-            "etunimi": "Campbell",
-            "sukunimi": "Wyatt",
-            "nimimerkki": "Reissaaja",
-            "paikkakunta": "Kuopio",
-            "esittely": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        }
-    ]
-
     const [nimi, setNimi] = useState('');
-    const [jasenet, setJasenet] = useState(data);
+    const [jasenet, setJasenet] = useState([]);
+
+    //Hae jäsenet tietokannasta
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/matkaaja").then((response) => {
+            setJasenet(response.data);
+        });
+    }, [])
     
     const [show,setShow] = useState(false);
-
-
     const [modal, setModal] = useState('');
 
     const handleClose = () => setShow(false);
@@ -42,19 +29,7 @@ function Jasensivu() {
 
     return (
         <div>
-            <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="matkakohde">Matkakohteet</Nav.Link>
-                        <Nav.Link href="omatkat">Omat matkat</Nav.Link>
-                        <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
-                        <Nav.Link href="jasenet">Jäsenet</Nav.Link>
-                        <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
+            <Ylapalkki/>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -74,17 +49,11 @@ function Jasensivu() {
                 </Modal.Body>
             </Modal>
 
-            <h3 style={{ backgroundColor: "lightgray" }}>Jäsenet</h3><br></br>
+            <div style={{ backgroundColor: "lightgray" }}>
+                <h3 style={{ marginLeft: "1rem" }}>Jäsenet</h3>
+            </div>
+            
             <Container fluid>
-                <Row className="mb-5">
-                    <Col>
-                        <label>
-                            Hae jäsentä nimellä: <br></br>
-                            <input type="text" value={nimi} onChange={(e) => setNimi(e.target.value)} />
-                        </label>
-                        <button>Hae</button><br></br>
-                    </Col>
-                </Row>
 
 
                 <Table className="table-light taulu">
@@ -106,7 +75,7 @@ function Jasensivu() {
                     </thead>
                     <tbody>
                         {jasenet.map((jasen) => (
-                            <tr key={jasen.id} onClick={() => {handleShow(); setModal(jasen)} }>
+                            <tr key={jasen.idmatkaaja} onClick={() => {handleShow(); setModal(jasen)} }>
                                 <td>
                                     <div className='flex'>
                                         <div className='kuva'>
