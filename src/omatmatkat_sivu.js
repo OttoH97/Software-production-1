@@ -8,6 +8,7 @@ import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col,FloatingLabel,ListGroup,Table,Check } from 'react-bootstrap';
 import Axios from 'axios';
+import { Modal } from 'react-bootstrap';
 
 
 function OmatMatkat(){
@@ -51,7 +52,8 @@ function OmatMatkat(){
      
 
      const poistamatka = (id) => {
-         Axios.delete('http://localhost:3001/poistamatka/'+[id]); 
+         Axios.delete('http://localhost:3001/poistamatka/' + id); 
+         
      };
 
     const handlealkupvm = event => {
@@ -72,6 +74,12 @@ function OmatMatkat(){
             else
             setYksityinen("0")    
     };
+
+    const handleShowR = () => setShow(true);
+        const [show, setShow] = useState(false);
+        const handleCloseR = () => {
+            setShow(false)
+        }; 
 
     var currentdate = new Date(); 
         var datetime = currentdate.getFullYear() + "-"
@@ -95,22 +103,28 @@ function OmatMatkat(){
 
     const handleMatka = event => {
         event.preventDefault();        
-        Axios.post("http://localhost:3001/omatmatkat",{
+       Axios.post("http://localhost:3001/omatmatkat",{
             idmatkaaja:matkaajaID,
             alkupvm:alkupaivamaara,
             loppupvm:loppupaivamaara,
             yksityinen:yksityinen,
-        });
+ 
+        }).then(res => setMatkaID(res.data.insertId.toString())) 
+        console.log('matkaID:',matkaID)
         alert(`Luonti onnistui`);
-    };
 
+        Axios.post("http://localhost:3001//omatmatkatTarina",{
+            idmatkakohde:matkakohdeID,
+            pvm:datetime,
+            teksti:tarinaTeksti,
+            idmatka:matkaID, 
+    });
+}
     const rivit = matka.map((val) => {
-
-        const getFormattedDate = (dateStr) => { //Muuttaa JSON päivämäärän normaaliksi.
+        const getFormattedDate = (dateStr) => { //Muuttaa JSON päivämäärän normaaliksi. 
             const date = new Date(dateStr);
             return date.toLocaleDateString();
-          }
-        
+          }        
         return <tr key={val.id}>
             <td>{val.idmatka}</td>
             <td>{getFormattedDate(val.alkupvm)}</td>
@@ -119,7 +133,7 @@ function OmatMatkat(){
         </tr>
         
     })
-
+    
 
     return(
     
@@ -134,14 +148,11 @@ function OmatMatkat(){
                 <Nav.Link href="omatkat">Omat matkat</Nav.Link>
                 <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                 <Nav.Link href="jasenet">Jäsenet</Nav.Link>
-                <Nav.Link href="otiedot">Omat tiedot</Nav.Link>            
+                <Nav.Link href="otiedot">Omat tiedot</Nav.Link>          
             </Nav>
         </Navbar.Collapse>        
     </Navbar>
         
-        {
-            // Jonkunnäöinen looppi matkakohteille tauluun
-        }
 
     <Container fluid="md">
     <Form>
@@ -216,6 +227,9 @@ function OmatMatkat(){
 
     <Button variant="success" onClick={handleMatka}>Luo</Button>{' '}
     </Form>
+    <br></br>
+    <h2>Muokkaa</h2>
+
     </Container>
 </div>
 
