@@ -9,7 +9,7 @@ import { Form, Button, Row, Col, FloatingLabel, Table } from 'react-bootstrap';
 import Axios from 'axios';
 import { Modal } from 'react-bootstrap';
 import { Routes, Route, BrowserRouter as Router, useNavigate } from 'react-router-dom'
-import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
+//import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
 //Token kirjautuminen ...työn alla
 
 /*async function loginUser(credentials) {
@@ -90,7 +90,6 @@ function Login({ setToken }) {
 
     };
     
-
     useEffect(async () => {
         Axios.get("http://localhost:3001/login").then((response) => {
             if (response.data.loggedIn == true) {
@@ -101,10 +100,11 @@ function Login({ setToken }) {
            
         })
     }, [])
+    
     const handleLogOut = () => {
+        setLoginStatus(false);
         localStorage.clear();
         window.location.reload(true);
-        setMsg("Et ole kirjautunut sisään")
     };
 
     return (
@@ -121,7 +121,7 @@ function Login({ setToken }) {
                             <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                             <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                             <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
-                            <Nav.Link href="login">Kirjaudu</Nav.Link>
+                            <Nav.Link id='logIn' href="login"><Button id='kirjaudu' variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
                             <Nav.Link><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
@@ -144,12 +144,10 @@ function Login({ setToken }) {
                     </Row>
                     <Row>
                         <div>
-                            <Button style={{ marginTop: 10 }} variant='primary' onClick={login}>Kirjaudu</Button>
+                            <Button style={{ marginTop: 10 }} variant='primary' onClick={login} data-testId = "Kirjaudu">Kirjaudu</Button>
                         </div>
                     </Row>
-                    
-                    <p>{msg}</p>
-                    
+                        
                     
                 </Form>
             </div>
