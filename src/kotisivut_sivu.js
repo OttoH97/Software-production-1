@@ -30,9 +30,11 @@ function Kotisivut() {
     const kirjautunut = () => {
         if (!localStorage.getItem("user") == ''){
             console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
+            //const reg = document.getElementById('reg').hidden(true);
         }
         else
             console.log("Et ole kirjautunut sisään vielä!");
+            //reg = document.getElementById('reg').hidden(false);
     };
 
     kirjautunut();
@@ -111,9 +113,9 @@ function Kotisivut() {
                         <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
-                        <Nav.Link><Button variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
+                        <Nav.Link><Button id='reg' variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
                         <Nav.Link href="login"><Button id='kirjaudu' variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
-                        <Nav.Link><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
+                        <Nav.Link><Button id='logOut' size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

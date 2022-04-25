@@ -23,9 +23,7 @@ function OmatMatkat(){
     const [loppupaivamaara, setLoppupaivamaara] = useState([]);
     const [matkaajaID, setMatkaajaID] = useState(localStorage.getItem("idmatkaaja"));
     const [yksityinen, setYksityinen] = useState(["0"]);
-/*     const handlematkaajaIDChange = event => {
-        setMatkaajaID(event.target.value);
-    }; */
+
     //tarina
     const [matkakohdeID, setMatkakohdeID] = useState([]);
     const [paivamaara, setPaivamaara] = useState([]);
@@ -39,9 +37,7 @@ function OmatMatkat(){
             localStorage.setItem("idmatkaaja", response.data[0].idmatkaaja);        
             console.log('Kirjautunut:',response.data); 
             //setMatkaajaID(response.data[0].idmatkaaja);
-            console.log(matkaajaID); 
-            console.log(response.data[0].idmatkaaja)
-                   
+            console.log("idmatkaaja: " + matkaajaID);             
          });
                  
      }, [])
