@@ -26,15 +26,16 @@ import { click } from '@testing-library/user-event/dist/click';
 
 function Kotisivut() {
 
+    const reg = document.getElementById("reg");
+    const logOut = document.getElementById("logOut");
+    const logIn = document.getElementById("logIn");
 
     const kirjautunut = () => {
         if (!localStorage.getItem("user") == ''){
             console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
-            //const reg = document.getElementById('reg').hidden(true);
         }
         else
             console.log("Et ole kirjautunut sisään vielä!");
-            //reg = document.getElementById('reg').hidden(false);
     };
 
     kirjautunut();
@@ -101,8 +102,21 @@ function Kotisivut() {
         window.location.reload(true);
     };
 
+    function hideButtons() {
+        if (!localStorage.getItem("user") == ''){
+            document.getElementById("reg").hidden = true;
+            document.getElementById("logOut").hidden = false;
+            document.getElementById("logIn").hidden = true;
+        }
+        else{
+            document.getElementById("reg").hidden = false;
+            document.getElementById("logOut").hidden = true;
+            document.getElementById("logIn").hidden = false;
+        }
+    };
+
     return (
-        <div>
+        <div onLoad={hideButtons}>
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -113,16 +127,15 @@ function Kotisivut() {
                         <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
-                        <Nav.Link><Button id='reg' variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
-                        <Nav.Link href="login"><Button id='kirjaudu' variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
-                        <Nav.Link><Button id='logOut' size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
+                        <Nav.Link id='reg'><Button variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
+                        <Nav.Link id='logIn' href="login"><Button id='kirjaudu' variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
+                        <Nav.Link id='logOut'><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-
             <Form>
                 {/* Rekisteröitymisen modal */}
-                <Modal show={show} onHide={handleCloseR}>
+                <Modal className='registrastion' show={show} onHide={handleCloseR}>
                     <Modal.Header closeButton>
                         <Modal.Title>Rekisteröidy</Modal.Title>
                     </Modal.Header>
@@ -160,7 +173,7 @@ function Kotisivut() {
                     </Modal.Footer>
                 </Modal>
                 {/*Kirjautumisen modal */}
-                <Modal show={showK} onHide={handleCloseK}>
+                <Modal className='logIn' show={showK} onHide={handleCloseK}>
                     <Modal.Header closeButton>
                         <Modal.Title>Kirjaudu sisään</Modal.Title>
                     </Modal.Header>
@@ -205,11 +218,10 @@ function Kotisivut() {
                     </Accordion>
                 </Row>
             </Form>
-
-
-
         </div>
     )
+
+    
 
 }
 
