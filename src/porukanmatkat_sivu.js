@@ -14,15 +14,19 @@ import { Routes, Route, BrowserRouter as Router, useNavigate } from 'react-route
 
 function PorukanMatkat() {
 
+    const [msg,setMsg] = useState('');
+
     let navigate = useNavigate();
     useEffect(async () => {
         Axios.get("http://localhost:3001/login").then((response) => {
             if (!localStorage.getItem("user") == ''){
                 console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
+                setMsg("Käyttäjä : "+localStorage.getItem( "user"))
                 
             }
             else{
                 navigate("/login")
+                setMsg("Kirjaudu")
             }
         })
     }, [])
@@ -30,6 +34,7 @@ function PorukanMatkat() {
     const handleLogOut = () => {
         localStorage.clear();
         window.location.reload(true);
+        setMsg("");
     };
     
     
@@ -52,9 +57,9 @@ function PorukanMatkat() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-
+            <p>{msg}</p>
             <Taulu />
-
+            
 
         </div>
 
@@ -71,10 +76,6 @@ export const Taulu = (props) => {
 
     const showStory = () => setShowT(true);
     const closeStory = () => setShowT(false);
-
-    const [msg, setMsg] = useState('');
-
-
 
     useEffect(async () => {
         Axios.get("http://localhost:3001/matkakohdejatarina").then((response) => {
@@ -137,8 +138,6 @@ export const Taulu = (props) => {
                     </ModalBody>
 
                 </Modal>
-
-                <p>{msg}</p>
             </Form>
         </div>
     )

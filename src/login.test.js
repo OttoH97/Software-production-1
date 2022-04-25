@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event'
 import {createMemoryHistory} from 'history'
 import React from 'react'
 import {NavLink, MemoryRouter as Router, BrowserRouter, MemoryRouter} from 'react-router-dom'
-
+import {Kotisivut} from './kotisivut_sivu'
 import {Login} from './Login'
-const app = require("/Users/OMISTAJA/Documents/Koulutehtävät/Ohjelmistotuotanto2022/Matkakertomus/server/serveri") // Link to your server file
+const app = require("/Users/OMISTAJA/Documents/Koulutehtävät/Ohjelmistotuotanto2022/Matkakertomus/server/serveri") //Kannattaa varmaan muuttaa tämä :DDD
 const supertest = require('supertest')
 const request = supertest(app)
 
@@ -46,4 +46,5 @@ test("Onnistuuko kirjautuminen", async () =>{
       userEvent.type(passwordInput, 'asd');
       fireEvent.click(kirjaudu);
 })
+
 
