@@ -59,6 +59,19 @@ app.use('/login', (req, res) => {
     });
 });*/
 
+//kirjautuneen matkat
+app.post('/matkakirjautunut', (req, res) => {
+    const idmatkaaja = req.body.idmatkaaja;
+
+    db.query("SELECT * FROM matka where idmatkaaja = ?",[idmatkaaja],(err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result) 
+        }
+    })
+})
+
 //Haetaan kirjautuneen käyttäjän omat tiedot
 app.post('/kirjautunut', (req, res) => {
     const email = req.body.email;
@@ -67,7 +80,7 @@ app.post('/kirjautunut', (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.send(result)
+            res.send(result) 
         }
     })
 })
@@ -189,7 +202,14 @@ app.post('/omatmatkat', (req, res) => {
     );
 });
 
+app.delete('/poistamatka', (req, res) => {
+    const idmatka = req.body.idmatka
+    const poista = 'DELETE FROM matka WHERE idmatka = ?';
 
+    db.query(poista, idmatka, (err, result) => {
+        
+    })
+})
 
 // Rekisteröitymiseen
 app.post('/matkaaja', (req, res) => {
@@ -207,7 +227,7 @@ app.post('/matkaaja', (req, res) => {
             if (err) {
                 console.log(err)
             } else
-                res.send("Values inserted")
+                res.send("Values inserted") 
         }
     );
 });

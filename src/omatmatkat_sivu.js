@@ -15,17 +15,44 @@ function OmatMatkat(){
     const [matka, setMatka] = useState([]);
     const [matkakohde, setMatkakohde] = useState([]);
     const [tarina, setTarina] = useState([]);
+    const [kayttaja, setKayttaja] = useState([]);
+    const [email, setSahkoposti] = useState(localStorage.getItem("user"));
 
     //matka
     const [alkupaivamaara, setAlkupaivamaara] = useState([]);
     const [loppupaivamaara, setLoppupaivamaara] = useState([]);
-    const [matkaajaID, setMatkaajaID] = useState("1");
+    const [matkaajaID, setMatkaajaID] = useState('');
     const [yksityinen, setYksityinen] = useState(["0"]);
     //tarina
     const [matkakohdeID, setMatkakohdeID] = useState([]);
     const [paivamaara, setPaivamaara] = useState([]);
     const [tarinaTeksti, setTarinaTeksti] = useState([]);
     const [matkaID, setMatkaID] = useState([]);
+
+    useEffect(async () => { //kirjautuneen tiedot
+     await Axios.post("http://localhost:3001/kirjautunut",{email: email,}).then((response) => {
+             setKayttaja(response.data);          
+             console.log('Kirjautunut:',response.data);
+             setMatkaajaID(response.data[0].idmatkaaja);
+             console.log(matkaajaID)  
+                   
+         });
+                 
+     }, [])
+     
+
+     useEffect(async () => {
+      Axios.post("http://localhost:3001/matkakirjautunut",{idmatkaaja: matkaajaID,}).then((response) => {
+             setMatka(response.data);
+             console.log('Matkat:',response.data); 
+         });
+     }, [])
+
+     
+
+     const poistamatka = (id) => {
+         Axios.delete('http://localhost:3001/poistamatka/'+[id]); 
+     };
 
     const handlealkupvm = event => {
         setAlkupaivamaara(event.target.value)
@@ -49,15 +76,9 @@ function OmatMatkat(){
     var currentdate = new Date(); 
         var datetime = currentdate.getFullYear() + "-"
                 + (currentdate.getMonth()+1)  + "-" 
-                + currentdate.getDate();
+                + currentdate.getDate(); 
 
              
-    useEffect(async () => {
-        Axios.get("http://localhost:3001/matka").then((response) => {
-            setMatka(response.data);
-            console.log(matka);
-        });
-    }, [])
 
     useEffect(async () => {
         Axios.get("http://localhost:3001/matkakohde").then((response) => {
@@ -94,7 +115,7 @@ function OmatMatkat(){
             <td>{val.idmatka}</td>
             <td>{getFormattedDate(val.alkupvm)}</td>
             <td>{getFormattedDate(val.loppupvm)}</td>
-            <td><Button variant="warning">Muokkaa</Button> <Button variant="danger">Poista</Button></td>                    
+            <td><Button variant="warning">Muokkaa</Button> <Button onClick={() => {poistamatka(val.idmatka)}} variant="danger">Poista</Button></td>                    
         </tr>
         
     })
@@ -103,7 +124,7 @@ function OmatMatkat(){
     return(
     
         <div>
-            
+          
     <Navbar  bg="light" expand="lg">        
         <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -117,7 +138,7 @@ function OmatMatkat(){
             </Nav>
         </Navbar.Collapse>        
     </Navbar>
-
+        
         {
             // Jonkunnäöinen looppi matkakohteille tauluun
         }
