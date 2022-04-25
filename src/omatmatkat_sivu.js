@@ -16,14 +16,17 @@ function OmatMatkat(){
     const [matka, setMatka] = useState([]);
     const [matkakohde, setMatkakohde] = useState([]);
     const [tarina, setTarina] = useState([]);
-    const [kayttaja, setKayttaja] = useState([]);
+    const [kayttaja, setKayttaja] = useState(localStorage.getItem("kayttaja"));
     const [email, setSahkoposti] = useState(localStorage.getItem("user"));
 
     //matka
     const [alkupaivamaara, setAlkupaivamaara] = useState([]);
     const [loppupaivamaara, setLoppupaivamaara] = useState([]);
-    const [matkaajaID, setMatkaajaID] = useState('');
+    const [matkaajaID, setMatkaajaID] = useState(localStorage.getItem("idmatkaaja"));
     const [yksityinen, setYksityinen] = useState(["0"]);
+/*     const handlematkaajaIDChange = event => {
+        setMatkaajaID(event.target.value);
+    }; */
     //tarina
     const [matkakohdeID, setMatkakohdeID] = useState([]);
     const [paivamaara, setPaivamaara] = useState([]);
@@ -31,11 +34,14 @@ function OmatMatkat(){
     const [matkaID, setMatkaID] = useState([]);
 
     useEffect(async () => { //kirjautuneen tiedot
-     await Axios.post("http://localhost:3001/kirjautunut",{email: email,}).then((response) => {
-             setKayttaja(response.data);          
-             console.log('Kirjautunut:',response.data);
-             setMatkaajaID(response.data[0].idmatkaaja);
-             console.log(matkaajaID)  
+        await Axios.post("http://localhost:3001/kirjautunut",{email: email,}).then((response) => {
+            //setKayttaja(response.data);
+            localStorage.setItem("kayttaja", response.data);
+            localStorage.setItem("idmatkaaja", response.data[0].idmatkaaja);        
+            console.log('Kirjautunut:',response.data); 
+            //setMatkaajaID(response.data[0].idmatkaaja);
+            console.log(matkaajaID); 
+            console.log(response.data[0].idmatkaaja)
                    
          });
                  
@@ -46,6 +52,7 @@ function OmatMatkat(){
       Axios.post("http://localhost:3001/matkakirjautunut",{idmatkaaja: matkaajaID,}).then((response) => {
              setMatka(response.data);
              console.log('Matkat:',response.data); 
+
          });
      }, [])
 
@@ -86,7 +93,7 @@ function OmatMatkat(){
                 + (currentdate.getMonth()+1)  + "-" 
                 + currentdate.getDate(); 
 
-             
+
 
     useEffect(async () => {
         Axios.get("http://localhost:3001/matkakohde").then((response) => {
@@ -112,6 +119,8 @@ function OmatMatkat(){
         }).then(res => setMatkaID(res.data.insertId.toString())) 
         console.log('matkaID:',matkaID)
         alert(`Luonti onnistui`);
+        window.location.reload(true);
+    };
 
         Axios.post("http://localhost:3001//omatmatkatTarina",{
             idmatkakohde:matkakohdeID,
@@ -119,7 +128,7 @@ function OmatMatkat(){
             teksti:tarinaTeksti,
             idmatka:matkaID, 
     });
-}
+
     const rivit = matka.map((val) => {
         const getFormattedDate = (dateStr) => { //Muuttaa JSON päivämäärän normaaliksi. 
             const date = new Date(dateStr);
@@ -234,6 +243,6 @@ function OmatMatkat(){
 </div>
 
 
-    )
-}
+)
+        }
 export {OmatMatkat};

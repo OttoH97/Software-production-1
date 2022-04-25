@@ -363,6 +363,6 @@ app.get('/kuva', (req, res) => {
     })
 })
 
-app.listen(3001, () => {
+module.exports = app.listen(3001, () => {
     console.log("toimii portissa 3001")
 });
