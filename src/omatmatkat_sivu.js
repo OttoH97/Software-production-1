@@ -79,7 +79,7 @@ function OmatMatkat() {
 
     const poistamatka = (id) => {
         Axios.delete('http://localhost:3001/poistamatka/' + id);
-
+        window.location.reload(true); // ladataan sivu uudestaan poiston jälkeen
     };
 
     const handlealkupvm = event => {
