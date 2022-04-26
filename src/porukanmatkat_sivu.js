@@ -93,7 +93,6 @@ export const Taulu = (props) => {
             <td>{val.maa}</td>
             <td>{val.paikkakunta}</td>
             <td>{val.kuvausteksti}</td>
-            <td>{val.kuva}</td>
             <td><Button
                 variant="primary"
                 onClick={() => { setModalData(val.teksti); showStory(true) }}>Katso</Button></td>
@@ -118,7 +117,6 @@ export const Taulu = (props) => {
                             <th>Maa</th>
                             <th>Paikkakunta </th>
                             <th>Kuvaus </th>
-                            <th>Kuva </th>
                             <th>Tarina</th>
                         </tr>
                     </thead>

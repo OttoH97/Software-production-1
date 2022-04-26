@@ -1,5 +1,6 @@
 import { findByText, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
+import { response } from 'express';
 import {createMemoryHistory} from 'history'
 import React from 'react'
 import {NavLink, MemoryRouter as Router, BrowserRouter, MemoryRouter} from 'react-router-dom'
@@ -36,15 +37,15 @@ test("Onnistuuko kirjautuminen", async () =>{
         </Router>,
       )
 
-      fireEvent.click(screen.getByText("Kirjaudu sisään"));
-
-      let emailInput = screen.getByPlaceholderText(/Anna sähköposti/i);
-      let passwordInput = screen.getByPlaceholderText(/Anna salasana/i);
+      let emailInput = screen.getByTestId(/sposti/i);
+      let passwordInput = screen.getByTestId(/salasana/i);
       const kirjaudu = screen.getByTestId(/Kirjaudu/i);
 
       userEvent.type(emailInput, 'asd');
       userEvent.type(passwordInput, 'asd');
       fireEvent.click(kirjaudu);
+
+      expect(response.status(200))
 })
 
 
