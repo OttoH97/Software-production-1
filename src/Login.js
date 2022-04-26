@@ -146,12 +146,14 @@ function Login({ setToken }) {
                         <Form.Control
                             placeholder='Anna sähköposti'
                             type='text'
+                            data-testId = "sposti"
                             onChange={(e) => { setEmail(e.target.value) }} />
                     </Row>
                     <Row>
                         <Form.Label>Salasana</Form.Label>
                         <Form.Control
                             type='password'
+                            data-testId = "salasana"
                             placeholder='Anna salasana'
                             onChange={(e) => { setPassword(e.target.value) }} />
                     </Row>

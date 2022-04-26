@@ -134,6 +134,8 @@ app.post('/login', (req, res) => {
                 })
                 req.session.user = result;
                 console.log(req.session.user);
+                console.log(res.statusCode)
+                
                 //Tervehdys käyttäjälle
                 res.json({ auth: true, token: token, message: "Terve " + "" + email, data: result })
             }
@@ -396,7 +398,7 @@ app.get('/matka', (req, res) => {
 })
 
 app.get('/matkakohdejatarina', (req, res) => {
-    db.query("SELECT matkakohde.idmatkakohde,matkakohde.kohdenimi,matkakohde.maa,matkakohde.paikkakunta,matkakohde.kuvausteksti,tarina.teksti from matkakohde INNER join tarina on matkakohde.idmatkakohde = tarina.idmatkakohde"
+    db.query("SELECT matkakohde.idmatkakohde,matkakohde.kohdenimi,matkakohde.maa,matkakohde.paikkakunta,matkakohde.kuvausteksti,matkakohde.kuva,tarina.teksti from matkakohde INNER join tarina on matkakohde.idmatkakohde = tarina.idmatkakohde"
         , (err, result) => {
             if (err) {
                 console.log(err)

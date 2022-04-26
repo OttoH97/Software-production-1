@@ -15,13 +15,13 @@ const request = supertest(app)
   let maa = "Englanti;"
   let paikkakunta = "Lontoo";
   let kuvausteksti = "Pubikierros Lontoossa";
-  let kuva = 1
+  
   
 
   const response = await request.post("/matkakohde")
 .set('Content-type', 'application/json')
 .send({kohdenimi : kohdenimi, maa : maa, paikkakunta : paikkakunta,
-kuvausteksti : kuvausteksti, kuva : kuva}); 
+kuvausteksti : kuvausteksti}); 
 
 expect(response.statusCode).toBe(200);
 
