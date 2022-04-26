@@ -52,7 +52,6 @@ function PorukanMatkat() {
                         <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                         <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
-                        <Nav.Link href="login">Kirjaudu</Nav.Link>
                         <Nav.Link><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

@@ -82,7 +82,7 @@ function OmatMatkat(){
      
 
      useEffect(async () => {
-        Axios.post("http://localhost:3001/matkakirjautunut",{idmatkaaja: matkaajaID,}).then((response) => {
+      Axios.post("http://localhost:3001/matkakirjautunut",{idmatkaaja: matkaajaID,}).then((response) => {
              setMatka(response.data);
              console.log('Matkat:',response.data); 
 
