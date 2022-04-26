@@ -159,7 +159,7 @@ function Login({ setToken }) {
                     </Row>
                     <Row>
                         <div>
-                            <Button style={{ marginTop: 10 }} variant='primary' onClick={login} data-testId = "Kirjaudu">Kirjaudu</Button>
+                            <Button style={{ marginTop: 10 }} variant='primary' onClick={login} data-testid = "Kirjaudu">Kirjaudu</Button>
                         </div>
                     </Row>
                         

@@ -295,23 +295,8 @@ function Matkakohdesivu() {
                 return false;
         };
 
-        function hideButtons() {
-            if (!localStorage.getItem("user") == ''){
-                document.getElementById("oMatkat").hidden = false;
-                document.getElementById("pMatkat").hidden = false;
-                document.getElementById("members").hidden = false;
-                document.getElementById("oTiedot").hidden = false;
-            }
-            else{
-                document.getElementById("oMatkat").hidden = true;
-                document.getElementById("pMatkat").hidden = true;
-                document.getElementById("members").hidden = true;
-                document.getElementById("oTiedot").hidden = true;
-            }
-        };
-
         return (
-            <div onLoad={hideButtons}>
+            <div>
                 <Navbar bg="light" expand="lg">
                     <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
