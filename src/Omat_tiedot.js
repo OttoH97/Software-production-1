@@ -77,7 +77,7 @@ function OmatSivut() {
                 <Nav.Link href="omatkat">Omat matkat</Nav.Link>
                 <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                 <Nav.Link href="jasenet">Jäsenet</Nav.Link>
-                <Nav.Link href="otiedot">Omat tiedot</Nav.Link>            
+                <Nav.Link href="otiedot" data-testId="omat">Omat tiedot</Nav.Link>            
             </Nav>
         </Navbar.Collapse>        
     </Navbar>
@@ -89,22 +89,22 @@ function OmatSivut() {
     <Row>
     <Col>
         <Form.Label>Etunimi</Form.Label>
-        <Form.Control name='etunimi' onChange={handleEtunimi} value={etunimi} placeholder="" />
+        <Form.Control name='etunimi' data-testId ="etutesti" onChange={handleEtunimi} value={etunimi} placeholder="" />
     </Col>
     <Col>
         <Form.Label>Sukunimi</Form.Label>
-        <Form.Control name='sukunimi' onChange={handleSukunimi} value={sukunimi} placeholder="" />
+        <Form.Control name='sukunimi'data-testId ="sukutesti" onChange={handleSukunimi} value={sukunimi} placeholder="" />
     </Col>
     <Col>
         <Form.Label>Nimimerkki</Form.Label>
-        <Form.Control name='nimimerkki' onChange={handleNimimerkki} value={nimimerkki} placeholder="" />
+        <Form.Control name='nimimerkki'data-testId ="nimimerkkitesti" onChange={handleNimimerkki} value={nimimerkki} placeholder="" />
     </Col>
     </Row>
     </Form.Group>
     
         <Form.Group className="mb-2" controlId="salasana">
         <Form.Label>Paikkakunta</Form.Label>
-        <Form.Control name='paikkakunta' onChange={handlePaikkakunta} value={paikkakunta} type="text" placeholder="" />
+        <Form.Control name='paikkakunta'data-testId ="paikkatesti" onChange={handlePaikkakunta} value={paikkakunta} type="text" placeholder="" />
         </Form.Group>
     
     
@@ -112,6 +112,7 @@ function OmatSivut() {
         <Form.Control
         onChange={handleEsittely} 
         value={esittely}
+        data-testId = "testiesittely"
         name='esittely'
         as="textarea"
         placeholder=""
@@ -123,11 +124,11 @@ function OmatSivut() {
     <Row>
     <Col>
         <Form.Label>Sähköposti</Form.Label>
-        <Form.Control name='sahkoposti' value={email} readOnly placeholder="" />
+        <Form.Control name='sahkoposti'data-testId="testisposti" value={email} readOnly placeholder="" />
     </Col>
     </Row>
     <br></br>
-    <Button variant="success" onClick={handleMuutos}>Tallenna</Button>{' '}
+    <Button variant="success" data-testId = "tallenna" onClick={handleMuutos}>Tallenna</Button>{' '}
 </Form>
 </Container>
 </div>
