@@ -105,8 +105,19 @@ function Login({ setToken }) {
         window.location.reload(true);
     };
 
+    function hideButtons() {
+        if (!localStorage.getItem("user") == ''){
+            document.getElementById("logOut").hidden = false;
+            document.getElementById("logIn").hidden = true;
+        }
+        else{
+            document.getElementById("logOut").hidden = true;
+            document.getElementById("logIn").hidden = false;
+        }
+    };
+
     return (
-        <Container fluid='md'>
+        <Container fluid='md' onLoad={hideButtons}>
             <div>
 
                 <Navbar bg="light" expand="lg">
@@ -119,8 +130,8 @@ function Login({ setToken }) {
                             <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                             <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                             <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
-                            <Nav.Link id='logIn' href="login"><Button id='kirjaudu' variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
-                            <Nav.Link><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
+                            {/* <Nav.Link id='logIn' href="login"><Button id='kirjaudu' variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link> */}
+                            {/* <Nav.Link id='logOut'><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link> */}
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

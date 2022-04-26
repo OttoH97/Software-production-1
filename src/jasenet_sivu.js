@@ -8,9 +8,28 @@ import { Nav } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import Axios from 'axios';
+import { Routes, Route, BrowserRouter as Router, useNavigate } from 'react-router-dom'
 
 
 function Jasensivu() {
+
+    const [msg,setMsg] = useState('');
+
+    let navigate = useNavigate();
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/login").then((response) => {
+            if (!localStorage.getItem("user") == ''){
+                console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
+                setMsg("Käyttäjä : "+localStorage.getItem( "user"))
+                
+            }
+            else{
+                navigate("/login")
+                setMsg("Kirjaudu")
+            }
+        })
+    }, [])
+
     const [nimi, setNimi] = useState('');
     const [jasenet, setJasenet] = useState([]);
 
