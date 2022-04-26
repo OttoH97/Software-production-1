@@ -99,7 +99,7 @@ app.post('/paivitatiedot', (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.send(result)
+            res.send(result.data.insertId)
         }
     })
 })
@@ -174,8 +174,8 @@ app.post('/omatmatkatTarina', (req, res) => {
     const teksti = req.body.teksti;
     const idmatka = req.body.idmatka;
 
-    db.query('INSERT INTO tarina (idmatkakohde,pvm,teksti,idmatka) VALUES (?,?,?,?)'
-        , [pvm, idmatkakohde, teksti, idmatka],
+    db.query('INSERT INTO tarina (pvm,teksti,idmatkakohde,idmatka) VALUES (?,?,?,?)'
+        , [pvm, teksti, idmatkakohde, idmatka],
         (err, result) => {
             if (err) {
                 console.log(err)
