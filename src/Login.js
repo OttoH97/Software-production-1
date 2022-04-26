@@ -80,7 +80,6 @@ function Login({ setToken }) {
                 console.log(response.data);
                 localStorage.setItem("user", email); //käyttäjän sähköposti tallennetaan localStorageen
                 localStorage.setItem("token", response.data.token); //tokeni tallennetaan localStorageen
-                setMsg(response.data.message);
                 setLoginStatus(true);
                 // console.log("user:" + localStorage.getItem("user") + " token:" + localStorage.getItem("token"));
                 toKotisivu(); //kirjautumisen jälkeen käyttäjä heitetään takaisin kotisivulle
@@ -94,7 +93,6 @@ function Login({ setToken }) {
         Axios.get("http://localhost:3001/login").then((response) => {
             if (response.data.loggedIn == true) {
                 setLoginStatus(true)
-                setMsg(response.data.user[0].email);
                 console.log(response.data)
             }
            
@@ -148,7 +146,7 @@ function Login({ setToken }) {
                         </div>
                     </Row>
                         
-                    
+                    <p>{msg}</p>
                 </Form>
             </div>
         </Container>
