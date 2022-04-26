@@ -51,7 +51,7 @@ function OmatMatkat(){
     const [matkaID, setMatkaID] = useState("");
 
     //Muokkaus
-    const [tarinaTekstim, setTarinaTekstim] = useState([]);
+    const [tarinaTekstim, setTarinaTekstim] = useState('');
     const [alkupaivamaaram, setAlkupaivamaaram] = useState('');
     const [loppupaivamaaram, setLoppupaivamaaram] = useState('');
     const [matkaIDm, setMatkaIDm] = useState("");
@@ -109,7 +109,7 @@ function OmatMatkat(){
     const etsitarina = (mid) => {
         Axios.post('http://localhost:3001/etsitarina/' + mid).then((response) => {
             console.log(response.data)
-            setTarinaTekstim(response.data[0].teksti.toString())
+            setTarinaTekstim(response.data[0].teksti.toString())           
         });
     };
 
@@ -230,7 +230,6 @@ function OmatMatkat(){
           }        
         return <tr key={val.id}>
             <td>{val.kuvaus}</td>
-            <td>{val.idmatka}</td>
             <td>{getFormattedDate(val.alkupvm)}</td>
             <td>{getFormattedDate(val.loppupvm)}</td>
             <td><Button onClick={()=>{etsimatka(val.idmatka);etsitarina(val.idmatka);}} variant="warning">Muokkaa</Button> <Button onClick={() => {poistamatka(val.idmatka)}} variant="danger">Poista</Button></td>                    
@@ -267,7 +266,6 @@ function OmatMatkat(){
     <thead>
     <tr>
         <th>Kuvaus</th>
-        <th>Matka</th>
         <th>Alku pvm</th>
         <th>Loppu pvm</th>
         <th>Muokkaa / Poista</th>
