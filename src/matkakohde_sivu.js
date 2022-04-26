@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Col, Container, NavItem, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { Navbar, Card, Button } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import Axios from 'axios';
-import { NavDropdown, Modal, Form } from 'react-bootstrap';
+import {Modal, Form } from 'react-bootstrap';
 
 function Matkakohdesivu() {
 
@@ -18,12 +17,20 @@ function Matkakohdesivu() {
 
     //Uuden matkakohteen ponnahdusikkunan hallinta
     const [showadd, setShowadd] = useState(false);
-    const handleCloseAdd = () => setShowadd(false);
+    const handleCloseAdd = () => {
+        clearVariables();
+        document.getElementById("createform").reset();
+        setShowadd(false);
+    }
     const handleShowAdd = () => setShowadd(true);
 
     //Muokkaus ponnahdusikkunan hallinta
     const [showupdate, setShowupdate] = useState(false);
-    const handleCloseUpdate = () => setShowupdate(false);
+    const handleCloseUpdate = () => {
+        clearVariables();
+        document.getElementById("updateform").reset();
+        setShowupdate(false);
+    }
     const handleShowUpdate = (matkakohde) => {
         setIdmatkakohde(matkakohde.idmatkakohde);
         setKohdenimi(matkakohde.kohdenimi);
@@ -34,8 +41,14 @@ function Matkakohdesivu() {
         setShowupdate(true);
     }
 
-    //Hakukenttä
-    const [haku, setHaku] = useState('');
+    const clearVariables = () => {
+        setIdmatkakohde('');
+        setKohdenimi('');
+        setPaikkakunta('');
+        setMaa('');
+        setKuvausteksti('');
+        setKuva();
+    }
 
     //Matkakohteen tiedot
     const [idmatkakohde, setIdmatkakohde] = useState('');
@@ -49,16 +62,19 @@ function Matkakohdesivu() {
     const [matkakohteet, setMatkakohteet] = useState([]);
 
     const kirjautunut = () => {
-        if (!localStorage.getItem("user") == '') return true;
+        if (localStorage.getItem("user")) return true;
         return false;
     };
 
 
     //Hae matkakohteet tietokannasta
-    useEffect(async () => {
-        Axios.get("http://localhost:3001/matkakohde").then((response) => {
-            setMatkakohteet(response.data);
-        });
+    useEffect(() => {
+        async function haeTiedot() {
+            await Axios.get("http://localhost:3001/matkakohde").then((response) => {
+                setMatkakohteet(response.data);
+            });
+        }
+        haeTiedot();
     }, [])
 
     //Luodaan uusi matkakohde tietokantaan
@@ -122,7 +138,7 @@ function Matkakohdesivu() {
         }
 
         function hideButtons() {
-            if (!localStorage.getItem("user") == ''){
+            if (localStorage.getItem("user")){
                 document.getElementById("oMatkat").hidden = false;
                 document.getElementById("pMatkat").hidden = false;
                 document.getElementById("members").hidden = false;
@@ -173,27 +189,27 @@ function Matkakohdesivu() {
                         Lisää uusi matkakohde
                     </Modal.Header>
                     <Modal.Body>
-                        <div className='flex'>
-                            <Form>
+                        <div className='flex px-2'>
+                            <Form id="createform">
                                 <Row>
                                     <Form.Label>Kuva</Form.Label>
                                     <Form.Control type="file" onChange={(e) => setKuva(e.target.files[0])} />
                                 </Row>
                                 <Row>
                                     <Form.Label>Kohdenimi</Form.Label>
-                                    <Form.Control placeholder='Pariisi' name="kohdenimi" value={kohdenimi} onChange={(e) => setKohdenimi(e.target.value)} />
+                                    <Form.Control name="kohdenimi" value={kohdenimi} onChange={(e) => setKohdenimi(e.target.value)} />
                                 </Row>
                                 <Row>
                                     <Form.Label>Maa</Form.Label>
-                                    <Form.Control placeholder='Ranska' value={maa} onChange={(e) => setMaa(e.target.value)} />
+                                    <Form.Control value={maa} onChange={(e) => setMaa(e.target.value)} />
                                 </Row>
                                 <Row>
                                     <Form.Label>Paikkakunta</Form.Label>
-                                    <Form.Control placeholder='Pariisi' value={paikkakunta} onChange={(e) => setPaikkakunta(e.target.value)} />
+                                    <Form.Control value={paikkakunta} onChange={(e) => setPaikkakunta(e.target.value)} />
                                 </Row>
                                 <Row>
                                     <Form.Label>Kuvausteksti</Form.Label>
-                                    <Form.Control placeholder='kuvausteksti' value={kuvausteksti} onChange={(e) => setKuvausteksti(e.target.value)} />
+                                    <Form.Control value={kuvausteksti} onChange={(e) => setKuvausteksti(e.target.value)} />
                                 </Row>
                             </Form>
                         </div>
@@ -211,7 +227,7 @@ function Matkakohdesivu() {
                     </Modal.Header>
                     <Modal.Body>
                         <div className='flex'>
-                            <Form>
+                            <Form id="updateform">
                                 <Row>
                                     <Form.Label>Kuva</Form.Label>
                                     <Form.Control type="file" onChange={(e) => setKuva(e.target.files[0])} />
@@ -283,7 +299,6 @@ function Matkakohdesivu() {
 
         const [showK, setShowK] = useState(false);
         const handleCloseK = () => setShowK(false);
-        const handleShowK = () => setShowK(true);
 
         const handleLogOut = () => {
             localStorage.clear();
@@ -291,7 +306,7 @@ function Matkakohdesivu() {
         };
 
         const kirjautunut = () => {
-            if (!localStorage.getItem("user") == '') return true;
+            if (localStorage.getItem("user")) return true;
                 return false;
         };
 
