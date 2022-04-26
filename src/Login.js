@@ -107,18 +107,22 @@ function Login({ setToken }) {
 
     function hideButtons() {
         if (!localStorage.getItem("user") == ''){
-            document.getElementById("logOut").hidden = false;
-            document.getElementById("logIn").hidden = true;
+            document.getElementById("oMatkat").hidden = false;
+            document.getElementById("pMatkat").hidden = false;
+            document.getElementById("members").hidden = false;
+            document.getElementById("oTiedot").hidden = false;
         }
         else{
-            document.getElementById("logOut").hidden = true;
-            document.getElementById("logIn").hidden = false;
+            document.getElementById("oMatkat").hidden = true;
+            document.getElementById("pMatkat").hidden = true;
+            document.getElementById("members").hidden = true;
+            document.getElementById("oTiedot").hidden = true;
         }
     };
 
     return (
-        <Container fluid='md' onLoad={hideButtons}>
-            <div>
+        <Container fluid='md'>
+            <div onLoad={hideButtons}>
 
                 <Navbar bg="light" expand="lg">
                     <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
@@ -126,10 +130,10 @@ function Login({ setToken }) {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="matkakohde">Matkakohteet</Nav.Link>
-                            <Nav.Link href="omatkat">Omat matkat</Nav.Link>
-                            <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
-                            <Nav.Link href="jasenet">Jäsenet</Nav.Link>
-                            <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
+                            {/* <Nav.Link id='oMatkat' href="omatkat">Omat matkat</Nav.Link>
+                            <Nav.Link id='pMatkat' href="pmatkat">Porukan matkat</Nav.Link>
+                            <Nav.Link id='members' href="jasenet">Jäsenet</Nav.Link>
+                            <Nav.Link id='oTiedot' href="otiedot">Omat tiedot</Nav.Link> */}
                             {/* <Nav.Link id='logIn' href="login"><Button id='kirjaudu' variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link> */}
                             {/* <Nav.Link id='logOut'><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link> */}
                         </Nav>
