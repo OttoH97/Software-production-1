@@ -356,7 +356,7 @@ app.get('/matkakohde/kuva/:tiedostonnimi', function (req, res) {
 });
 
 app.get('/matkakohde', (req, res) => {
-    db.query("SELECT matkakohde.*, Count(tarina.idtarina) AS tarinamaara FROM matkakohde LEFT JOIN tarina ON tarina.idmatkakohde = matkakohde.idmatkakohde GROUP BY matkakohde.kohdenimi", (err, result) => {
+    db.query("SELECT matkakohde.*, Count(tarina.idtarina) AS tarinamaara FROM matkakohde LEFT JOIN tarina ON tarina.idmatkakohde = matkakohde.idmatkakohde GROUP BY matkakohde.idmatkakohde", (err, result) => {
         if (err) {
             console.log(err)
         } else {
