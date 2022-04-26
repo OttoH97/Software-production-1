@@ -88,7 +88,7 @@ export const Taulu = (props) => {
 
 
         return <tr key={val.idmatkakohde}>
-            <td>{val.idmatkakohde}</td>
+            {/* <td>{val.idmatkakohde}</td> */}
             <td>{val.kohdenimi}</td>
             <td>{val.maa}</td>
             <td>{val.paikkakunta}</td>
@@ -113,11 +113,11 @@ export const Taulu = (props) => {
 
                     <thead>
                         <tr>
-                            <th>#Id</th>
+                            {/* <th>#Id</th> */}
                             <th>Kohdenimi</th>
                             <th>Maa</th>
                             <th>Paikkakunta </th>
-                            <th>kuvausteksti </th>
+                            <th>Kuvaus </th>
                             <th>Kuva </th>
                             <th>Tarina</th>
                         </tr>
