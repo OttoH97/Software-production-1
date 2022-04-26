@@ -42,12 +42,26 @@ function OmatMatkat(){
     const [loppupaivamaara, setLoppupaivamaara] = useState([]);
     const [matkaajaID, setMatkaajaID] = useState(localStorage.getItem("idmatkaaja"));
     const [yksityinen, setYksityinen] = useState(["0"]);
+    const [kuvaus, setKuvaus] = useState([]);
 
     //tarina
     const [matkakohdeID, setMatkakohdeID] = useState([]);
     const [paivamaara, setPaivamaara] = useState([]);
     const [tarinaTeksti, setTarinaTeksti] = useState([]);
     const [matkaID, setMatkaID] = useState("");
+
+    //Muokkaus
+    const [tarinaTekstim, setTarinaTekstim] = useState([]);
+    const [alkupaivamaaram, setAlkupaivamaaram] = useState('');
+    const [loppupaivamaaram, setLoppupaivamaaram] = useState('');
+    const [matkaIDm, setMatkaIDm] = useState("");
+    const [kuvausm, setKuvausm] = useState([]);
+
+    useEffect(async () => {
+        setMatkamuokkaus(null)
+    }, [])
+    const [matkamuokkaus, setMatkamuokkaus] = useState([]);
+
 
     const handleLogOut = () => {
         localStorage.clear();
@@ -68,7 +82,7 @@ function OmatMatkat(){
      
 
      useEffect(async () => {
-      Axios.post("http://localhost:3001/matkakirjautunut",{idmatkaaja: matkaajaID,}).then((response) => {
+        Axios.post("http://localhost:3001/matkakirjautunut",{idmatkaaja: matkaajaID,}).then((response) => {
              setMatka(response.data);
              console.log('Matkat:',response.data); 
 
@@ -78,18 +92,50 @@ function OmatMatkat(){
      
 
      const poistamatka = (id) => {
-         Axios.delete('http://localhost:3001/poistamatka/' + id); 
-         
+         Axios.delete('http://localhost:3001/poistamatka/' + id);
+         setTimeout(() => {window.location.reload(true);},1500);         
      };
 
+     const etsimatka = (mid) => {
+        Axios.get('http://localhost:3001/etsimatka/' + mid).then((response) => {
+            console.log('matkamuokkaus: ',matkamuokkaus)
+            setAlkupaivamaaram(aikamuutos(response.data[0].alkupvm))
+            setLoppupaivamaaram(aikamuutos(response.data[0].loppupvm))
+            setKuvausm(response.data[0].kuvaus)
+            setMatkaIDm(response.data[0].idmatka)
+        });
+    };
+
+    const etsitarina = (mid) => {
+        Axios.post('http://localhost:3001/etsitarina/' + mid).then((response) => {
+            console.log(response.data)
+            setTarinaTekstim(response.data[0].teksti.toString())
+        });
+    };
+
+    const handlekuvaus = event => {
+        setKuvaus(event.target.value)
+    };
+    const handlekuvausm = event => {
+        setKuvausm(event.target.value)
+    };
     const handlealkupvm = event => {
         setAlkupaivamaara(event.target.value)
     };
     const handleloppupvm = event => {
         setLoppupaivamaara(event.target.value)
     };
+    const handlealkupvmm = event => {
+        setAlkupaivamaaram(event.target.value)
+    };
+    const handleloppupvmm = event => {
+        setLoppupaivamaaram(event.target.value)
+    };
     const handleTarina = event => {
         setTarinaTeksti(event.target.value)
+    };
+    const handleTarinam = event => {
+        setTarinaTekstim(event.target.value)
     };
     const handleMatkakohdeID = event => {
         setMatkakohdeID(event.target.value)       
@@ -127,13 +173,14 @@ function OmatMatkat(){
         });
     }, [])
 
-    const handleMatka = () => {
-             
+    //Matkan luonti
+    const handleMatka = () => {             
         Axios.post("http://localhost:3001/omatmatkat",{
               idmatkaaja:matkaajaID,
               alkupvm:alkupaivamaara,
               loppupvm:loppupaivamaara,
               yksityinen:yksityinen,
+              kuvaus:kuvaus,
               
           })
           .then(function(response)  {
@@ -151,19 +198,42 @@ function OmatMatkat(){
           })
         setTimeout(() => {window.location.reload(true);},1500);
       }
+
+      //Muokkaus
+    const handleMuokkaus = () => {
+        Axios.post('http://localhost:3001/paivitamatka', {
+            alkupvm:alkupaivamaaram,
+            loppupvm:loppupaivamaaram,
+            idmatka:matkaIDm,
+            teksti:tarinaTekstim,
+            kuvaus:kuvausm,
+        });
+    };
+    const handleMuokkausM = () => {
+        Axios.post('http://localhost:3001/paivitatarina', {
+            idmatka:matkaIDm,
+            teksti:tarinaTekstim,
+        });
+        setTimeout(() => {window.location.reload(true);},1500);
+    };
       
+      const aikamuutos = ((val) =>{
+          var aika = new Date(val);           
+            return aika.toLocaleDateString("sv-SE");
+      })
       
   
     const rivit = matka.map((val) => {
         const getFormattedDate = (dateStr) => { //Muuttaa JSON päivämäärän normaaliksi. 
             const date = new Date(dateStr);
-            return date.toLocaleDateString();
+            return date.toLocaleDateString("sv-SE");
           }        
         return <tr key={val.id}>
+            <td>{val.kuvaus}</td>
             <td>{val.idmatka}</td>
             <td>{getFormattedDate(val.alkupvm)}</td>
             <td>{getFormattedDate(val.loppupvm)}</td>
-            <td><Button variant="warning">Muokkaa</Button> <Button onClick={() => {poistamatka(val.idmatka)}} variant="danger">Poista</Button></td>                    
+            <td><Button onClick={()=>{etsimatka(val.idmatka);etsitarina(val.idmatka);}} variant="warning">Muokkaa</Button> <Button onClick={() => {poistamatka(val.idmatka)}} variant="danger">Poista</Button></td>                    
         </tr>
         
     })
@@ -196,10 +266,11 @@ function OmatMatkat(){
     <Table striped bordered hover size="sm">
     <thead>
     <tr>
-      <th>Matka</th>
-      <th>Alku pvm</th>
-      <th>Loppu pvm</th>
-      <th>Muokkaa / Poista</th>
+        <th>Kuvaus</th>
+        <th>Matka</th>
+        <th>Alku pvm</th>
+        <th>Loppu pvm</th>
+        <th>Muokkaa / Poista</th>
     </tr>
     </thead>
     <tbody>
@@ -210,7 +281,12 @@ function OmatMatkat(){
 
     <br></br>
     <h3>Luo uusi matka</h3>
-        
+    <Row><Col>
+    <Form.Label>Matka nimi</Form.Label>
+        <FloatingLabel label="Matka nimi">
+        <Form.Control onChange={handlekuvaus} value={kuvaus} placeholder="" />
+        </FloatingLabel>
+    </Col></Row>
     <Row>
     <Col>
     <Form.Label>Matkakohde</Form.Label>
@@ -260,11 +336,46 @@ function OmatMatkat(){
     </Col></Row>
     <br></br>
 
-    <Button variant="success" onClick={handleMatka}>Luo</Button>{' '}
+    <Button variant="success" onClick={handleMatka}>Luo matka</Button>{' '}
     </Form>
     <br></br>
     <h2>Muokkaa</h2>
-
+    <Row><Col>
+    <Form.Label>Matka nimi</Form.Label>
+        <FloatingLabel label="Matka nimi">
+        <Form.Control onChange={handlekuvausm} value={kuvausm} placeholder="" />
+        </FloatingLabel>
+    </Col></Row>
+            <Row>
+            <Col>        
+        <Form.Label>Alku pvm</Form.Label>
+        <FloatingLabel label="YYYY-MM-DD">
+        <Form.Control onChange={handlealkupvmm} value={alkupaivamaaram} placeholder="" />
+        </FloatingLabel>
+    </Col>
+    <Col>
+        <Form.Label>Loppu pvm</Form.Label>
+        <FloatingLabel label="YYYY-MM-DD">
+        <Form.Control onChange={handleloppupvmm} value={loppupaivamaaram} placeholder="" />
+        </FloatingLabel>
+    </Col>
+    </Row>
+    <br></br>
+    <Row>
+    <Col>
+    <FloatingLabel controlId="floatingTextarea2" label="Tarina">
+        <Form.Control
+        onChange={handleTarinam}
+        value={tarinaTekstim}
+        as="textarea"
+        placeholder=""
+        style={{ height: '100px' }}
+        />
+        </FloatingLabel>
+    </Col>   
+    </Row>
+    <br></br>
+    <Button variant="success" onClick={()=>{handleMuokkaus();handleMuokkausM();}} >Muokkaa matkaa</Button>{' '}
     </Container>
 </div>
 

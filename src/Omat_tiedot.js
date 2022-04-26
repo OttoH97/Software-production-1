@@ -74,8 +74,8 @@ function OmatSivut() {
     const handlePaikkakunta = event => {
         setPaikkakunta(event.target.value)
     };
-    const handleMuutos = event => {
-        event.preventDefault();        
+    const handleMuutos = () => {
+                
         Axios.post("http://localhost:3001/paivitatiedot",{
             idmatkaaja:id,
             etunimi:etunimi,

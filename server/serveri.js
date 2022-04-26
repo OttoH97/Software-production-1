@@ -99,7 +99,7 @@ app.post('/paivitatiedot', (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.send(result.data.insertId)
+            res.send(result)
         }
     })
 })
@@ -190,9 +190,10 @@ app.post('/omatmatkat', (req, res) => {
     const loppupvm = req.body.loppupvm;
     const yksityinen = req.body.yksityinen;
     const idmatka = req.body.idmatka;
+    const kuvaus = req.body.kuvaus;
 
-    db.query('INSERT INTO matka (idmatkaaja,alkupvm,loppupvm,yksityinen) VALUES (?,?,?,?)'
-        , [idmatkaaja,alkupvm,loppupvm,yksityinen],
+    db.query('INSERT INTO matka (idmatkaaja,alkupvm,loppupvm,yksityinen,kuvaus) VALUES (?,?,?,?,?)'
+        , [idmatkaaja,alkupvm,loppupvm,yksityinen,kuvaus],
         (err, result) => {
             if (err) {
                 console.log(err)
@@ -206,6 +207,59 @@ app.post('/omatmatkat', (req, res) => {
 app.delete('/poistamatka/:idmatka', (req, res) => {
     const idmatka = req.params.idmatka
     db.query('DELETE FROM matka WHERE idmatka = ?',idmatka, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+})
+//matka muokkaus
+app.get('/etsimatka/:idmatka', (req, res) => {
+    const idmatka = req.params.idmatka
+    db.query('SELECT * FROM matka WHERE idmatka = ?',idmatka, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+})
+//tarina muokkaus
+app.post('/etsitarina/:idmatka', (req, res) => {
+    const idmatka = req.params.idmatka
+    db.query('SELECT * FROM tarina WHERE idmatka = ?',idmatka, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+})
+//matka / tarina päivitys
+app.post('/paivitamatka', (req, res) => {
+    const alkupvm = req.body.alkupvm;
+    const loppupvm = req.body.loppupvm;
+    const teksti = req.body.teksti;
+    const idmatka = req.body.idmatka;
+    const kuvaus = req.body.kuvaus;
+
+    db.query("UPDATE matka SET alkupvm = ?, loppupvm = ?, kuvaus = ? WHERE idmatka = ?",
+    [alkupvm, loppupvm, kuvaus, idmatka],(err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    })
+})
+
+app.post('/paivitatarina', (req, res) => {
+    const teksti = req.body.teksti;
+    const idmatka = req.body.idmatka;
+
+    db.query("UPDATE tarina SET teksti = ? WHERE idmatka = ?",
+    [teksti, idmatka],(err, result) => {
         if (err) {
             console.log(err)
         } else {
