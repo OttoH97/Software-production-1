@@ -47,7 +47,7 @@ function OmatMatkat() {
     const [matkakohdeID, setMatkakohdeID] = useState([]);
     const [paivamaara, setPaivamaara] = useState([]);
     const [tarinaTeksti, setTarinaTeksti] = useState([]);
-    const [matkaID, setMatkaID] = useState([]);
+    const [matkaID, setMatkaID] = useState("");
 
     const handleLogOut = () => {
         localStorage.clear();
@@ -127,27 +127,33 @@ function OmatMatkat() {
         });
     }, [])
 
-    const handleMatka = event => {
-        event.preventDefault();
-        Axios.post("http://localhost:3001/omatmatkat", {
-            idmatkaaja: matkaajaID,
-            alkupvm: alkupaivamaara,
-            loppupvm: loppupaivamaara,
-            yksityinen: yksityinen,
-
-        }).then(res => setMatkaID(res.data.insertId.toString()))
-        console.log('matkaID:', matkaID)
-        alert(`Luonti onnistui`);
-        window.location.reload(true);
-    };
-
-    Axios.post("http://localhost:3001//omatmatkatTarina", {
-        idmatkakohde: matkakohdeID,
-        pvm: datetime,
-        teksti: tarinaTeksti,
-        idmatka: matkaID,
-    });
-
+    const handleMatka = () => {
+             
+        Axios.post("http://localhost:3001/omatmatkat",{
+              idmatkaaja:matkaajaID,
+              alkupvm:alkupaivamaara,
+              loppupvm:loppupaivamaara,
+              yksityinen:yksityinen,
+              
+          })
+          .then(function(response)  {
+              console.log(response.data.insertId.toString());
+              
+    
+          Axios.post("http://localhost:3001/omatmatkatTarina",{
+              idmatkakohde:matkakohdeID,
+              pvm:datetime,
+              teksti:tarinaTeksti,
+              idmatka:response.data.insertId,
+          })    
+      }).catch(function (error){
+            console.log(error)
+          })
+        setTimeout(() => {window.location.reload(true);},1500);
+      }
+      
+      
+  
     const rivit = matka.map((val) => {
         const getFormattedDate = (dateStr) => { //Muuttaa JSON päivämäärän normaaliksi. 
             const date = new Date(dateStr);
