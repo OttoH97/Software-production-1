@@ -8,6 +8,7 @@ import Axios from 'axios';
 import { NavDropdown, Modal, Form} from 'react-bootstrap';
 
 function Matkakohdesivu() {
+
     const [modal, setModal] = useState('');
 
     //Matkakohteen lisätietojen ponnahdusikkuna

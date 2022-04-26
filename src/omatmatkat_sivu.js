@@ -9,9 +9,27 @@ import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col,FloatingLabel,ListGroup,Table,Check } from 'react-bootstrap';
 import Axios from 'axios';
 import { Modal } from 'react-bootstrap';
+import { Routes, Route, BrowserRouter as Router, useNavigate } from 'react-router-dom'
 
 
 function OmatMatkat(){
+
+    const [msg,setMsg] = useState('');
+
+    let navigate = useNavigate();
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/login").then((response) => {
+            if (!localStorage.getItem("user") == ''){
+                console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
+                setMsg("Käyttäjä : "+localStorage.getItem( "user"))
+                
+            }
+            else{
+                navigate("/login")
+                setMsg("Kirjaudu")
+            }
+        })
+    }, [])
 
     const [matka, setMatka] = useState([]);
     const [matkakohde, setMatkakohde] = useState([]);
@@ -30,6 +48,11 @@ function OmatMatkat(){
     const [paivamaara, setPaivamaara] = useState([]);
     const [tarinaTeksti, setTarinaTeksti] = useState([]);
     const [matkaID, setMatkaID] = useState([]);
+
+    const handleLogOut = () => {
+        localStorage.clear();
+        window.location.reload(true);
+    };
 
     useEffect(async () => { //kirjautuneen tiedot
         await Axios.post("http://localhost:3001/kirjautunut",{email: email,}).then((response) => {
@@ -153,7 +176,8 @@ function OmatMatkat(){
                 <Nav.Link href="omatkat">Omat matkat</Nav.Link>
                 <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                 <Nav.Link href="jasenet">Jäsenet</Nav.Link>
-                <Nav.Link href="otiedot">Omat tiedot</Nav.Link>          
+                <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
+                <Nav.Link id='logOut'><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>          
             </Nav>
         </Navbar.Collapse>        
     </Navbar>
