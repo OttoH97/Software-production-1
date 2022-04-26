@@ -121,8 +121,23 @@ function Matkakohdesivu() {
             handleClose();
         }
 
+        function hideButtons() {
+            if (!localStorage.getItem("user") == ''){
+                document.getElementById("oMatkat").hidden = false;
+                document.getElementById("pMatkat").hidden = false;
+                document.getElementById("members").hidden = false;
+                document.getElementById("oTiedot").hidden = false;
+            }
+            else{
+                document.getElementById("oMatkat").hidden = true;
+                document.getElementById("pMatkat").hidden = true;
+                document.getElementById("members").hidden = true;
+                document.getElementById("oTiedot").hidden = true;
+            }
+        };
+
         return (
-            <div>
+            <div onLoad={hideButtons}>
                 <Ylapalkki />
 
                 {/* Esikatselu modal */}
@@ -277,21 +292,36 @@ function Matkakohdesivu() {
 
         const kirjautunut = () => {
             if (!localStorage.getItem("user") == '') return true;
-            return false;
+                return false;
+        };
+
+        function hideButtons() {
+            if (!localStorage.getItem("user") == ''){
+                document.getElementById("oMatkat").hidden = false;
+                document.getElementById("pMatkat").hidden = false;
+                document.getElementById("members").hidden = false;
+                document.getElementById("oTiedot").hidden = false;
+            }
+            else{
+                document.getElementById("oMatkat").hidden = true;
+                document.getElementById("pMatkat").hidden = true;
+                document.getElementById("members").hidden = true;
+                document.getElementById("oTiedot").hidden = true;
+            }
         };
 
         return (
-            <div>
+            <div onLoad={hideButtons}>
                 <Navbar bg="light" expand="lg">
                     <Navbar.Brand href="/">Matkakertomus</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="matkakohde">Matkakohteet</Nav.Link>
-                            <Nav.Link href="omatkat">Omat matkat</Nav.Link>
-                            <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
-                            <Nav.Link href="jasenet">Jäsenet</Nav.Link>
-                            <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
+                            <Nav.Link id='oMatkat' href="omatkat">Omat matkat</Nav.Link>
+                            <Nav.Link id='pMatkat' href="pmatkat">Porukan matkat</Nav.Link>
+                            <Nav.Link id='members' href="jasenet">Jäsenet</Nav.Link>
+                            <Nav.Link id='oTiedot' href="otiedot">Omat tiedot</Nav.Link>
 
                             {!kirjautunut() ? <Nav.Link><Button variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link> : ''}
                             {!kirjautunut() ? <Nav.Link href="login"><Button variant="outline-primary" size="sm"  /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link> : ''}
