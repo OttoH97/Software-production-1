@@ -1,13 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, NavItem, Row } from 'react-bootstrap';
 import { Navbar, Card, Button } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import Axios from 'axios';
 import { NavDropdown, Modal, Form} from 'react-bootstrap';
 
 function Matkakohdesivu() {
+
     const [modal, setModal] = useState('');
 
     //Matkakohteen lisätietojen ponnahdusikkuna
@@ -47,6 +48,12 @@ function Matkakohdesivu() {
     //Lista matkakohteista (haetaan alempana tietokannasta)
     const [matkakohteet, setMatkakohteet] = useState([]);
 
+    const kirjautunut = () => {
+        if (!localStorage.getItem("user") == '') return true;
+        return false;
+    };
+
+
     //Hae matkakohteet tietokannasta
     useEffect(async () => {
         Axios.get("http://localhost:3001/matkakohde").then((response) => {
@@ -76,7 +83,6 @@ function Matkakohdesivu() {
       }
 
       function handleUpdate(event){
-          console.log("UPDATEE " + idmatkakohde);
         if (idmatkakohde == null) return;
 
         const url = 'http://localhost:3001/matkakohde/' + idmatkakohde;
@@ -107,9 +113,6 @@ function Matkakohdesivu() {
                 setMatkakohteet(response.data);
             });
         });
-
-
-
         handleClose();
       }
 
@@ -134,10 +137,14 @@ function Matkakohdesivu() {
                     </div>
                 </div>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button className="mx-3" variant="primary" onClick={() => handleShowUpdate(modal)} >Muokkaa</Button>
-                    <Button variant="danger" onClick={() => handleRemove(modal.idmatkakohde)}>Poista</Button>
-                </Modal.Footer>
+                {kirjautunut() ? 
+                    modal.tarinamaara < 1 ?
+                        <Modal.Footer>
+                            <Button className="mx-3" variant="primary" onClick={() => handleShowUpdate(modal)} >Muokkaa</Button>
+                            <Button variant="danger" onClick={() => handleRemove(modal.idmatkakohde)}>Poista</Button>
+                        </Modal.Footer>
+                    : ""
+                 : ""}
             </Modal>
 
             {/* Uusi matkakohde */}
@@ -214,22 +221,18 @@ function Matkakohdesivu() {
                 </Modal.Footer>
             </Modal>
 
-            <h3 style={{ backgroundColor: "lightgray" }}>Matkakohteet</h3><br></br>
+            <div style={{ backgroundColor: "lightgray" }}>
+                <h3 style={{ marginLeft: "1rem" }}>Matkakohteet</h3>
+            </div>
 
-            <Button variant="primary" onClick={handleShowAdd}>
-                Lisää matkakohde
-            </Button>
 
             <Container fluid>
-                <Row className="mb-5">
-                    <Col>
-                        <label>
-                            Hae matkakohteita: <br></br>
-                            <input type="text" value={haku} onChange={(e) => setHaku(e.target.value)} />
-                        </label>
-                        <button>Hae</button>
-                    </Col>
-                </Row>
+                {kirjautunut() ?
+                <Button variant="primary" className='my-3' onClick={handleShowAdd}>
+                    Lisää matkakohde
+                </Button>
+                : ""}
+                
                 <Row xs={2} md={4} className="g-4">
                     {matkakohteet.map((matkakohde)  => (
                         <Col  key={matkakohde.idmatkakohde} onClick={() => {handleShow(); setModal(matkakohde)} }>
@@ -262,6 +265,16 @@ function Ylapalkki() {
     const handleCloseK = () => setShowK(false);
     const handleShowK = () => setShowK(true);
 
+    const handleLogOut = () => {
+        localStorage.clear();
+        window.location.reload(true);
+    };
+
+    const kirjautunut = () => {
+        if (!localStorage.getItem("user") == '') return true;
+        return false;
+    };
+
     return (
         <div>
         <Navbar bg="light" expand="lg">
@@ -274,8 +287,12 @@ function Ylapalkki() {
                     <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                     <Nav.Link href="jasenet">Jäsenet</Nav.Link>
                     <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
-                    <Nav.Link><Button variant="outline-primary" size="sm"  onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
-                    <Nav.Link href="login"><Button variant="outline-primary" size="sm"  /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
+                    
+                    {!kirjautunut() ? <Nav.Link><Button variant="outline-primary" size="sm"  onClick={handleShowR}>Rekisteröidy</Button></Nav.Link> : ''}
+                    {!kirjautunut() ?<Nav.Link href="login"><Button variant="outline-primary" size="sm"  /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link> : ''}
+                
+                    {kirjautunut() ?<Nav.Link><Button id='logOut' size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link> : ''}
+                
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
@@ -347,4 +364,4 @@ function Ylapalkki() {
     </div>
     )
 }
-export { Matkakohdesivu };
+export { Matkakohdesivu, Ylapalkki };

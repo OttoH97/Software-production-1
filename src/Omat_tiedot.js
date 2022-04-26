@@ -10,8 +10,26 @@ import { NavDropdown } from 'react-bootstrap';
 import { Form, Button, Row, Col,FloatingLabel } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import Axios from 'axios';
+import { Routes, Route, BrowserRouter as Router, useNavigate } from 'react-router-dom'
 
 function OmatSivut() {
+
+    const [msg,setMsg] = useState('');
+
+    let navigate = useNavigate();
+    useEffect(async () => {
+        Axios.get("http://localhost:3001/login").then((response) => {
+            if (!localStorage.getItem("user") == ''){
+                console.log("Olet kirjautunut sisään käyttäjänä " + localStorage.getItem("user"));
+                setMsg("Käyttäjä : "+localStorage.getItem( "user"))
+                
+            }
+            else{
+                navigate("/login")
+                setMsg("Kirjaudu")
+            }
+        })
+    }, [])
 
     const [email, setSahkoposti] = useState(localStorage.getItem("user"));
     const [kayttaja, setKayttaja] = useState([]);
@@ -22,7 +40,11 @@ function OmatSivut() {
     const [nimimerkki, setNimimerkki] = useState('');
     const [esittely, setEsittely] = useState('');
     const [paikkakunta, setPaikkakunta] = useState('');
-    
+
+    const handleLogOut = () => {
+        localStorage.clear();
+        window.location.reload(true);
+    };
 
     useEffect(async () => {
        Axios.post("http://localhost:3001/kirjautunut",{email: email,}).then((response) => {
@@ -77,7 +99,8 @@ function OmatSivut() {
                 <Nav.Link href="omatkat">Omat matkat</Nav.Link>
                 <Nav.Link href="pmatkat">Porukan matkat</Nav.Link>
                 <Nav.Link href="jasenet">Jäsenet</Nav.Link>
-                <Nav.Link href="otiedot">Omat tiedot</Nav.Link>            
+                <Nav.Link href="otiedot">Omat tiedot</Nav.Link>
+                <Nav.Link id='logOut'><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>            
             </Nav>
         </Navbar.Collapse>        
     </Navbar>
