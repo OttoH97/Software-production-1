@@ -16,14 +16,6 @@ import Axios from 'axios';
 import { Login } from "./Login";
 import { click } from '@testing-library/user-event/dist/click';
 
-/*
-    TODO:
-    #1 Rekisteröitymistietojen vieminen tietokantaan. DONE
-    #2 Kirjautuminen. WIP
-    #3 Session storage kirjautumiselle. DONE
- */
-
-
 function Kotisivut() {
 
     const kirjautunut = () => {
@@ -132,7 +124,7 @@ function Kotisivut() {
                         <Nav.Link id='members' href="jasenet">Jäsenet</Nav.Link>
                         <Nav.Link id='oTiedot' href="otiedot">Omat tiedot</Nav.Link>
                         <Nav.Link id='reg'><Button variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link>
-                        <Nav.Link id='logIn' href="login"><Button id='kirjaudu' variant="outline-primary" size="sm" /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link>
+                        <Nav.Link id='logIn' href="login"><Button id='kirjaudu' variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link>
                         <Nav.Link id='logOut'><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

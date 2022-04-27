@@ -324,7 +324,7 @@ function Matkakohdesivu() {
                             <Nav.Link id='oTiedot' href="otiedot">Omat tiedot</Nav.Link>
 
                             {!kirjautunut() ? <Nav.Link><Button variant="outline-primary" size="sm" onClick={handleShowR}>Rekisteröidy</Button></Nav.Link> : ''}
-                            {!kirjautunut() ? <Nav.Link href="login"><Button variant="outline-primary" size="sm"  /* onClick={handleShowK} */>Kirjaudu sisään</Button></Nav.Link> : ''}
+                            {!kirjautunut() ? <Nav.Link href="login"><Button variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link> : ''}
 
                             {kirjautunut() ? <Nav.Link><Button id='logOut' size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link> : ''}
 

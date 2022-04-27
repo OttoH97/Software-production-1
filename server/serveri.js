@@ -52,13 +52,6 @@ const db = mysql.createPool({
     port: 3307,
 })
 
-/*Token kirjautuminen ...työn alla
-app.use('/login', (req, res) => {
-    res.send({
-        token: 'test123'
-    });
-});*/
-
 //kirjautuneen matkat
 app.post('/matkakirjautunut', (req, res) => {
     const idmatkaaja = req.body.idmatkaaja;
@@ -147,28 +140,6 @@ app.post('/login', (req, res) => {
         }
     );
 });
-
-//app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
-
-/*app.post('/create', (req,res)=>{
-    const idmatkakohde = req.body.idmatkakohde;
-    const kohdenimi = req.body.kohdenimi; 
-    const maa = req.body.maa;
-    const paikkakunta = req.body.paikkakunta;
-    const kuvausteksti = req.body.kuvausteksti;
-    const kuva = req.body.kuva;
-    
-
-    db.query("INSERT INTO matkaaja (idmatkakohde,kohdenimi,maa,paikkakunta,kuvausteksti,kuva) VALUES (?,?,?,?,?,?)"
-    ,[id,idmatkakohde,kohdenimi,maa,paikkakunta,kuvausteksti,kuva],
-    (err,result)=>{
-        if(err){
-            console.log(err)
-        }else
-        res.send("Values inserted")
-    }
-    );
-});*/
 
 app.post('/omatmatkatTarina', (req, res) => {
     const idmatkakohde = req.body.idmatkakohde;

@@ -9,22 +9,6 @@ import { Form, Button, Row, Col, FloatingLabel, Table } from 'react-bootstrap';
 import Axios from 'axios';
 import { Modal } from 'react-bootstrap';
 import { Routes, Route, BrowserRouter as Router, useNavigate } from 'react-router-dom'
-//import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
-//Token kirjautuminen ...työn alla
-
-/*async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(data => data.json())
-}*/
-
-
-
 
 function Login({ setToken }) {
 
@@ -45,15 +29,6 @@ function Login({ setToken }) {
 
     kirjautunut();
 
-
-    /*const handleSubmit = async e => {
-        e.preventDefault();
-       const token = await loginUser({
-            email,
-            password
-        });
-        setToken(token);
-    }*/
 
     Axios.defaults.withCredentials = true; 
 
@@ -81,7 +56,6 @@ function Login({ setToken }) {
                 localStorage.setItem("user", email); //käyttäjän sähköposti tallennetaan localStorageen
                 localStorage.setItem("token", response.data.token); //tokeni tallennetaan localStorageen
                 setLoginStatus(true);
-                // console.log("user:" + localStorage.getItem("user") + " token:" + localStorage.getItem("token"));
                 toKotisivu(); //kirjautumisen jälkeen käyttäjä heitetään takaisin kotisivulle
             }
 
@@ -130,12 +104,6 @@ function Login({ setToken }) {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="matkakohde">Matkakohteet</Nav.Link>
-                            {/* <Nav.Link id='oMatkat' href="omatkat">Omat matkat</Nav.Link>
-                            <Nav.Link id='pMatkat' href="pmatkat">Porukan matkat</Nav.Link>
-                            <Nav.Link id='members' href="jasenet">Jäsenet</Nav.Link>
-                            <Nav.Link id='oTiedot' href="otiedot">Omat tiedot</Nav.Link> */}
-                            {/* <Nav.Link id='logIn' href="login"><Button id='kirjaudu' variant="outline-primary" size="sm">Kirjaudu sisään</Button></Nav.Link> */}
-                            {/* <Nav.Link id='logOut'><Button size='sm' onClick={handleLogOut}>Kirjaudu ulos</Button></Nav.Link> */}
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -169,9 +137,5 @@ function Login({ setToken }) {
         </Container>
     )
 }
-
-/*Login.propTypes = {
-    setToken: PropTypes.func.isRequired
-}*/
 
 export { Login };
